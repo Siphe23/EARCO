@@ -17,60 +17,69 @@
   <div class="loader-dots"><span></span><span></span><span></span><span></span></div>
 </div>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="logo">
-      <h2>EARCO.</h2>
-      <p>Better Sound Every Day</p>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <h2>EARCO.</h2>
+    <p>Better Sound Every Day</p>
+  </div>
+  <nav>
+    <ul id="navMenu">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT US</a></li>
+      <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+      <li class="dropdown" id="accountDropdown">
+        <button class="account-btn" onclick="toggleDropdown(event)">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
+        <div class="dropdown-content" id="dropdownMenu">
+          <a href="login.html">Login</a>
+          <a href="signup.html">Sign Up</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ABOUT PAGE -->
+<main class="about-main">
+  <section class="about-title-section">
+    <div class="about-title-block">
+      <h1 class="about-page-title">ABOUT<br>EARCO</h1>
+      <div class="title-divider"></div>
     </div>
-    <nav>
-      <ul id="navMenu">
-        <li><a href="index.html">HOME</a></li>
-        <li><a href="about.html">ABOUT US</a></li>
-        <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
-        <li class="dropdown">
-          <button class="account-btn">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
-          <div class="dropdown-content">
-            <a href="login.html">Login</a>
-            <a href="signup.html">Sign Up</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  </section>
 
-  <!-- ABOUT PAGE -->
-  <main class="about-main">
-    <section class="about-title-section">
-      <div class="about-title-block">
-        <h1 class="about-page-title">ABOUT<br>EARCO</h1>
-        <div class="title-divider"></div>
-      </div>
-    </section>
+  <section class="about-cards-section">
+    <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>EARCO is a modern audio technology brand built for people who love great sound and modern style.</p></div>
+    <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>We design high-quality headphones, earphones, ear pads, and mini Bluetooth speakers that focus on comfort, performance, and durability.</p></div>
+    <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>Our products use advanced audio technology to deliver clear sound, powerful bass, and smooth listening experiences.</p></div>
+    <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>At EARCO, we believe premium sound should be affordable, reliable, and available to everyone.</p></div>
+    <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>Our goal is to improve your listening experience every day. EARCO — Sound That Moves You.</p></div>
+  </section>
 
-    <section class="about-cards-section">
-      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>EARCO is a modern audio technology brand built for people who love great sound and modern style.</p></div>
-      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>We design high-quality headphones, earphones, ear pads, and mini Bluetooth speakers that focus on comfort, performance, and durability.</p></div>
-      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>Our products use advanced audio technology to deliver clear sound, powerful bass, and smooth listening experiences.</p></div>
-      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>At EARCO, we believe premium sound should be affordable, reliable, and available to everyone.</p></div>
-      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>Our goal is to improve your listening experience every day. EARCO — Sound That Moves You.</p></div>
-    </section>
+  <div class="shop-btn-wrapper">
+    <a href="products.html" class="shop-btn">SHOP NOW</a>
+  </div>
+</main>
 
-    <div class="shop-btn-wrapper">
-      <a href="products.html" class="shop-btn">SHOP NOW</a>
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div id="footerLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="login.html">Login</a>
-    </div>
-    <p>© 2026 EARCO. All Rights Reserved</p>
-  </footer>
+<!-- FOOTER -->
+<footer class="footer">
+  <div id="footerLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="login.html">Login</a>
+  </div>
+  <p>© 2026 EARCO. All Rights Reserved</p>
+</footer>
 
 <script src="loader.js"></script>
+<script>
+  function toggleDropdown(e) {
+    e.stopPropagation();
+    document.getElementById('dropdownMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('dropdownMenu').classList.remove('open');
+  });
+</script>
 </body>
 </html>

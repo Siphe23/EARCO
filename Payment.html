@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payment — EARCO</title>
+<link rel="stylesheet" href="payment.css">
+<link rel="stylesheet" href="loader.css">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-dots"><span></span><span></span><span></span><span></span></div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <h2>EARCO.</h2>
+    <p>Better Sound Every Day</p>
+  </div>
+  <nav>
+    <ul id="navMenu">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT US</a></li>
+      <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+      <li class="dropdown">
+        <button class="account-btn">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
+        <div class="dropdown-content">
+          <a href="login.html">Login</a>
+          <a href="signup.html">Sign Up</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<!-- PAYMENT SECTION -->
+<section class="payment-section">
+
+  <!-- COMING SOON BANNER -->
+  <div class="coming-soon-banner">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    We're working on it — Payment coming soon!
+  </div>
+
+  <div class="payment-wrapper">
+
+    <!-- LEFT: ORDER SUMMARY -->
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div class="summary-items">
+        <div class="summary-item">
+          <span>EARCO PulseX Headphones</span>
+          <span>R200.00</span>
+        </div>
+        <div class="summary-item">
+          <span>EARCO NeoBuds Earphones</span>
+          <span>R150.00</span>
+        </div>
+      </div>
+      <div class="summary-divider"></div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span>R350.00</span>
+      </div>
+      <div class="secure-badge">
+        <i class="fa-solid fa-lock"></i> Secure Checkout
+      </div>
+    </div>
+
+    <!-- RIGHT: PAYMENT FORM -->
+    <div class="payment-form-box">
+      <h2>Payment Details</h2>
+
+      <!-- PAYMENT METHOD TABS -->
+      <div class="pay-methods">
+        <button class="pay-method active"><i class="fa-solid fa-credit-card"></i> Card</button>
+        <button class="pay-method"><i class="fa-brands fa-paypal"></i> PayPal</button>
+        <button class="pay-method"><i class="fa-solid fa-mobile-screen"></i> EFT</button>
+      </div>
+
+      <div class="form-group">
+        <label>Cardholder Name</label>
+        <input type="text" placeholder="Name on card" disabled>
+      </div>
+
+      <div class="form-group">
+        <label>Card Number</label>
+        <div class="card-input-wrap">
+          <input type="text" placeholder="0000  0000  0000  0000" disabled>
+          <i class="fa-brands fa-cc-visa card-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Expiry Date</label>
+          <input type="text" placeholder="MM / YY" disabled>
+        </div>
+        <div class="form-group">
+          <label>CVV</label>
+          <input type="text" placeholder="•••" disabled>
+        </div>
+      </div>
+
+      <button class="pay-btn" onclick="alert('🚧 Payment is currently being set up. Check back soon!')">
+        <i class="fa-solid fa-lock"></i> PAY NOW
+      </button>
+
+      <p class="pay-note">
+        <i class="fa-solid fa-shield-halved"></i>
+        Your payment info is encrypted and secure.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div id="footerLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="login.html">Login</a>
+  </div>
+  <p>© 2026 EARCO. All Rights Reserved</p>
+</footer>
+
+<script src="loader.js"></script>
+</body>
+</html>

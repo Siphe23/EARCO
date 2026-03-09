@@ -39,9 +39,9 @@ function addToCart(name, price){
       <li><a href="index.html">HOME</a></li>
       <li><a href="about.html">ABOUT US</a></li>
       <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
-      <li class="dropdown">
-        <button class="account-btn">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
-        <div class="dropdown-content">
+      <li class="dropdown" id="accountDropdown">
+        <button class="account-btn" onclick="toggleDropdown(event)">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
+        <div class="dropdown-content" id="dropdownMenu">
           <a href="login.html">Login</a>
           <a href="signup.html">Sign Up</a>
         </div>
@@ -71,5 +71,14 @@ function addToCart(name, price){
 </footer>
 
 <script src="loader.js"></script>
+<script>
+  function toggleDropdown(e) {
+    e.stopPropagation();
+    document.getElementById('dropdownMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', function() {
+    document.getElementById('dropdownMenu').classList.remove('open');
+  });
+</script>
 </body>
 </html>

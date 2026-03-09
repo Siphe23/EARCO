@@ -1,6 +1,5 @@
-/* =====================
-   RESET & BASE
-   ===================== */
+/* ===== EARCO ABOUT.CSS — FULLY RESPONSIVE ===== */
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -10,41 +9,43 @@
 html, body {
   width: 100%;
   overflow-x: hidden;
-  font-family: 'Source Sans 3', sans-serif;
+  font-family: 'Source Sans 3', Arial, sans-serif;
   background: #fff;
   color: #2a2a2a;
 }
 
-/* =====================
-   HEADER
-   ===================== */
+/* ===== HEADER ===== */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 8%;
-  border-bottom: 1px solid #333;
+  padding: 18px 8%;
+  border-bottom: 1px solid #1e4a60;
   background: #0f2a36;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .logo h2 {
   color: #4aa3df;
   font-family: 'Rajdhani', sans-serif;
-  font-size: 24px;
+  font-size: 1.6rem;
   letter-spacing: 2px;
 }
 
 .logo p {
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 2px;
-  color: #aac4d0;
+  color: #7aa8c0;
 }
 
 nav ul {
   display: flex;
-  gap: 35px;
+  gap: 30px;
   list-style: none;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 nav a {
@@ -54,27 +55,20 @@ nav a {
   transition: 0.3s;
 }
 
-nav a:hover {
-  color: #4aa3df;
-}
+nav a:hover { color: #4aa3df; }
 
-/* =====================
-   CART ICON
-   ===================== */
 .cart-link a {
   font-size: 20px;
   color: #4aa3df;
   transition: 0.3s;
+  text-decoration: none;
 }
 
 .cart-link a:hover {
-  color: #2d8cbf;
+  color: #2d5f7a;
   transform: scale(1.2);
 }
 
-/* =====================
-   ACCOUNT BUTTON
-   ===================== */
 .account-btn {
   background: #2d5f7a;
   border: none;
@@ -82,24 +76,16 @@ nav a:hover {
   padding: 8px 16px;
   cursor: pointer;
   font-size: 14px;
-  font-family: 'Source Sans 3', sans-serif;
   border-radius: 4px;
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: background 0.3s;
+  transition: 0.3s;
 }
 
-.account-btn:hover {
-  background: #1a4a6b;
-}
+.account-btn:hover { background: #4aa3df; }
 
-/* =====================
-   DROPDOWN
-   ===================== */
-.dropdown {
-  position: relative;
-}
+.dropdown { position: relative; }
 
 .dropdown-content {
   display: none;
@@ -107,10 +93,11 @@ nav a:hover {
   background: #2d5f7a;
   min-width: 140px;
   border-radius: 6px;
-  top: 40px;
+  top: 42px;
   right: 0;
   overflow: hidden;
-  z-index: 200;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 }
 
 .dropdown-content a {
@@ -119,19 +106,13 @@ nav a:hover {
   color: white;
   text-decoration: none;
   font-size: 13px;
+  transition: 0.2s;
 }
 
-.dropdown-content a:hover {
-  background: #1a4a6b;
-}
+.dropdown-content a:hover { background: #4aa3df; }
+.dropdown:hover .dropdown-content { display: block; }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-/* =====================
-   ABOUT MAIN
-   ===================== */
+/* ===== ABOUT MAIN ===== */
 .about-main {
   min-height: calc(100vh - 130px);
   display: flex;
@@ -140,9 +121,7 @@ nav a:hover {
   padding: 60px 8% 40px;
 }
 
-/* =====================
-   TITLE SECTION
-   ===================== */
+/* ===== TITLE SECTION ===== */
 .about-title-section {
   width: 100%;
   display: flex;
@@ -159,7 +138,7 @@ nav a:hover {
 
 .about-page-title {
   font-family: 'Rajdhani', sans-serif;
-  font-size: clamp(52px, 8vw, 90px);
+  font-size: clamp(2.8rem, 8vw, 5.6rem);
   font-weight: 700;
   color: #1a4a6b;
   letter-spacing: 6px;
@@ -178,7 +157,6 @@ nav a:hover {
   border-radius: 2px;
 }
 
-/* Small image top-right */
 .about-hero-image {
   position: absolute;
   top: 0;
@@ -190,42 +168,48 @@ nav a:hover {
   height: 120px;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* =====================
-   CARDS SECTION
-   ===================== */
+/* ===== CARDS SECTION ===== */
 .about-cards-section {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0 40px;
+  gap: 20px;
   max-width: 1100px;
 }
 
 .about-card {
-  flex: 0 1 calc(50% - 40px);
+  flex: 0 1 calc(50% - 20px);
   max-width: 380px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: 30px 20px;
+  background: #f9fbfc;
+  border: 1px solid #dde8ef;
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Row 2: 3 cards */
+.about-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(26,74,107,0.1);
+}
+
 .about-card:nth-child(3),
 .about-card:nth-child(4),
 .about-card:nth-child(5) {
-  flex: 0 1 calc(33.33% - 40px);
+  flex: 0 1 calc(33.33% - 20px);
   max-width: 320px;
 }
 
 .about-card-icon {
   font-size: 28px;
-  color: #b0b8c0;
+  color: #4aa3df;
   margin-bottom: 14px;
 }
 
@@ -236,11 +220,10 @@ nav a:hover {
   max-width: 280px;
 }
 
-/* =====================
-   SHOP BUTTON
-   ===================== */
+/* ===== SHOP BUTTON ===== */
 .shop-btn-wrapper {
   margin-top: 48px;
+  margin-bottom: 20px;
 }
 
 .shop-btn {
@@ -253,22 +236,20 @@ nav a:hover {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
   transition: background 0.25s, transform 0.2s;
 }
 
 .shop-btn:hover {
-  background: #143d5a;
+  background: #4aa3df;
   transform: translateY(-2px);
 }
 
-/* =====================
-   FOOTER
-   ===================== */
+/* ===== FOOTER ===== */
 .footer {
   text-align: center;
-  padding: 30px;
-  border-top: 1px solid #333;
+  padding: 30px 8%;
+  border-top: 1px solid #1e4a60;
   background: #0f2a36;
   margin-top: 40px;
 }
@@ -278,6 +259,7 @@ nav a:hover {
   justify-content: center;
   gap: 20px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .footer a {
@@ -287,34 +269,56 @@ nav a:hover {
   transition: 0.3s;
 }
 
-.footer a:hover {
-  text-decoration: underline;
-}
+.footer a:hover { text-decoration: underline; }
 
 .footer p {
-  color: #7a9eb0;
+  color: #7aa8c0;
   font-size: 12px;
   margin-top: 8px;
 }
 
-/* =====================
-   ANIMATION
-   ===================== */
+/* ===== ANIMATION ===== */
 @keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* =====================
-   RESPONSIVE
-   ===================== */
-@media (max-width: 768px) {
+/* ===== RESPONSIVE ===== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .about-card,
+  .about-card:nth-child(3),
+  .about-card:nth-child(4),
+  .about-card:nth-child(5) {
+    flex: 0 1 calc(50% - 20px);
+    max-width: 100%;
+  }
+
   .about-hero-image img {
     width: 80px;
     height: 80px;
   }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px 5%;
+    text-align: center;
+  }
+
+  nav ul {
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .about-main { padding: 40px 5% 30px; }
+
+  .about-title-section { margin-bottom: 36px; }
+
+  .about-hero-image { display: none; }
 
   .about-card,
   .about-card:nth-child(3),
@@ -324,7 +328,7 @@ nav a:hover {
     max-width: 100%;
   }
 
-  nav ul {
-    gap: 16px;
-  }
+  .shop-btn { padding: 14px 36px; }
+
+  .footer { padding: 24px 5%; }
 }
