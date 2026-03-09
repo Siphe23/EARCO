@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Font Awesome (for cart icon) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<title>EARCO</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <h2>EARCO.</h2>
+    <p>Better Sound Every Day</p>
+  </div>
+
+  <nav>
+    <ul id="navMenu">
+      <li class="cart-link">
+        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+      </li>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT US</a></li>
+      <li class="dropdown">
+        <button class="account-btn">
+          ACCOUNT <i class="fa-solid fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="login.html">Login</a>
+          <a href="signup.html">Sign Up</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
+<!-- HERO -->
+
+<section class="herop">
+
+  <div class="herop-container">
+
+    <div class="herop-image">
+      <img src="Earphonewoman.jpg" alt="Woman with Earphones">
+    </div>
+
+    <div class="herop-text">
+      <h1 class="herop-title">
+        EXPERIENCE <br>
+        POWERFUL SOUND <br>
+        WITH EARCO
+      </h1>
+      <button class="btn">BUY IT NOW ></button>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- DISCOVER SECTION -->
+
+<section class="discover">
+
+<div class="discover-container">
+
+<div class="discover-text">
+
+<h3>Discover Better Sound</h3>
+
+<p>
+Explore EARCO’s premium range of high-quality audio accessories including
+headphones, earphones, ear pads and mini Bluetooth speakers. Designed
+for comfort, modern style and powerful sound performance.
+</p>
+
+<button class="btn">SHOP NOW ></button>
+
+</div>
+
+<div class="discover-slider">
+  <div class="slides">
+    <img src="images/slide1.jpg">
+    <img src="images/slide2.jpg">
+    <img src="images/slide3.jpg">
+  </div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PRODUCT FEATURES -->
+
+<section class="features">
+
+<h2>PRODUCT FEATURES</h2>
+
+<div class="video-box">
+
+<div class="video-wrapper">
+
+<video id="productVideo">
+<source src="HeadPhones.mp4" type="video/mp4">
+</video>
+
+<div class="play-button" onclick="playVideo()">▶</div>
+
+</div>
+
+</div>
+
+<div class="feature-grid">
+
+<div class="feature">
+<h3>🎧</h3>
+<h4>Premium Materials</h4>
+<p>Crafted with high quality and durable materials.</p>
+</div>
+
+<div class="feature">
+<h3>⚙️</h3>
+<h4>Advanced Technology</h4>
+<p>Built with modern audio technology for clear powerful sound.</p>
+</div>
+
+<div class="feature">
+<h3>💡</h3>
+<h4>Comfortable Design</h4>
+<p>Lightweight and soft ear cushions designed for long listening comfort.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div id="footerLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="login.html">Login</a>
+  </div>
+  <p>© 2026 EARCO. All Rights Reserved</p>
+</footer>
+
+
+
+<script>
+
+/* PLAY VIDEO */
+
+function playVideo(){
+let video = document.getElementById("productVideo");
+if(video){ video.play(); }
+}
+
+
+/* HEADER LOGIN CHECK */
+
+const nav = document.getElementById("navMenu");
+
+if(localStorage.getItem("loggedIn") === "true"){
+
+nav.innerHTML = `
+<li><a href="index.html">HOME</a></li>
+<li><a href="products.html">ALL PRODUCTS</a></li>
+<li><a href="contact.html">CONTACT</a></li>
+<li><a href="#" onclick="logout()">LOGOUT</a></li>
+`;
+
+}
+
+
+/* FOOTER LOGIN CHECK */
+
+const footer = document.getElementById("footerLinks");
+
+if(localStorage.getItem("loggedIn") === "true"){
+
+footer.innerHTML = `
+<a href="products.html">All Products</a>
+<a href="contact.html">Contact</a>
+<a href="#" onclick="logout()">Logout</a>
+`;
+
+}
+
+
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem("loggedIn");
+
+window.location.href="index.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
+
+
+

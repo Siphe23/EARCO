@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EARCO Cart</title>
+<link rel="stylesheet" href="cart.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+  /* Simple styling to make cart display nicely */
+  .cart-container { padding: 50px 8%; }
+  .cart-item { display: flex; align-items: center; margin-bottom: 20px; gap: 20px; background:#f1f1f1; padding:10px; border-radius:6px; }
+  .cart-item img { width:100px; height:100px; object-fit:cover; border-radius:6px; }
+  .cart-item h3 { margin:0; font-size:18px; }
+  .cart-item p { margin:5px 0; }
+  .cart-item .remove-btn { margin-left:auto; background:#2d5f7a; color:white; border:none; padding:6px 12px; cursor:pointer; border-radius:4px; }
+  .cart-item .remove-btn:hover { background:#4aa3df; }
+  .cart-total { margin-top:30px; }
+  .checkout-btn { background:#2d5f7a; color:white; border:none; padding:10px 20px; cursor:pointer; border-radius:4px; margin-top:10px; }
+  .checkout-btn:disabled { background:#999; cursor:not-allowed; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <h2>EARCO.</h2>
+    <p>Better Sound Every Day</p>
+  </div>
+  <nav>
+    <ul id="navMenu">
+      <li class="cart-link">
+        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+      </li>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT US</a></li>
+      <li class="dropdown">
+        <button class="account-btn">
+          ACCOUNT <i class="fa-solid fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="login.html">Login</a>
+          <a href="signup.html">Sign Up</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<!-- CART HEADER -->
+<header class="cart-header">
+  <h1>MY CART</h1>
+</header>
+
+<!-- CART CONTENT -->
+<section class="cart-container">
+  <div class="empty-cart">
+    Your cart is empty. <br>
+    <a href="products.html" class="shop-link">Start Shopping →</a>
+  </div>
+
+  <div class="cart-items"></div>
+
+  <div class="cart-total">
+    <h2>Total: R0</h2>
+    <button class="checkout-btn" disabled>Checkout</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div id="footerLinks">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="login.html">Login</a>
+  </div>
+  <p>© 2026 EARCO. All Rights Reserved</p>
+</footer>
+
+<script>
+  const cartItemsDiv = document.querySelector(".cart-items");
+  const emptyCartDiv = document.querySelector(".empty-cart");
+  const totalDisplay = document.querySelector(".cart-total h2");
+  const checkoutBtn = document.querySelector(".checkout-btn");
+
+  function renderCart(){
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cartItemsDiv.innerHTML = "";
+    let total = 0;
+
+    if(cart.length === 0){
+      emptyCartDiv.style.display = "block";
+      checkoutBtn.disabled = true;
+    } else {
+      emptyCartDiv.style.display = "none";
+      checkoutBtn.disabled = false;
+    }
+
+    cart.forEach((item, index) => {
+      total += parseFloat(item.price);
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <img src="images/${item.name.toLowerCase().replace(/\s/g,'-')}.jpg" alt="${item.name}">
+        <div>
+          <h3>${item.name}</h3>
+          <p>R${item.price}</p>
+        </div>
+        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+      `;
+      cartItemsDiv.appendChild(div);
+    });
+
+    totalDisplay.textContent = "Total: R" + total.toFixed(2);
+  }
+
+  function removeItem(index){
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index,1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  // Initial render
+  renderCart();
+
+  // Simple checkout
+  checkoutBtn.addEventListener("click", () => {
+    alert("Thank you for your purchase!");
+    localStorage.removeItem("cart");
+    renderCart();
+  });
+</script>
+
+</body>
+</html>
