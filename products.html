@@ -4,40 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EARCO Products</title>
-
 <link rel="stylesheet" href="products.css">
+<link rel="stylesheet" href="loader.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
 <script>
-// SIMPLE ADD TO CART
 function addToCart(name, price){
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push({ name, price });
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert(name + " added to cart!");
+  if(localStorage.getItem("loggedIn") !== "true"){
+    if(confirm("You need an account to buy. Go to Sign Up?")){
+      window.location.href = "signup.html";
+    }
+    return;
+  }
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push({ name, price });
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert(name + " added to cart!");
 }
 </script>
 </head>
-
 <body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-dots"><span></span><span></span><span></span><span></span></div>
+</div>
 
 <header class="header">
   <div class="logo">
     <h2>EARCO.</h2>
     <p>Better Sound Every Day</p>
   </div>
-
   <nav>
     <ul id="navMenu">
-      <li class="cart-link">
-        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
-      </li>
       <li><a href="index.html">HOME</a></li>
       <li><a href="about.html">ABOUT US</a></li>
+      <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
       <li class="dropdown">
-        <button class="account-btn">
-          ACCOUNT <i class="fa-solid fa-caret-down"></i>
-        </button>
+        <button class="account-btn">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
         <div class="dropdown-content">
           <a href="login.html">Login</a>
           <a href="signup.html">Sign Up</a>
@@ -49,61 +52,12 @@ function addToCart(name, price){
 
 <section class="products">
   <div class="product-grid">
-
-    <!-- PRODUCT 1 -->
-    <div class="product">
-      <img src="images/phone-5.jpg" alt="EARCO PulseX Headphones">
-      <h3>EARCO PulseX Headphones</h3>
-      <p>Powerful bass wireless headphones.</p>
-      <h4>R200</h4>
-      <button onclick="addToCart('EARCO PulseX Headphones',200)">Add To Cart</button>
-    </div>
-
-    <!-- PRODUCT 2 -->
-    <div class="product">
-      <img src="images/phine-7.jpg" alt="EARCO NeoBuds Earphones">
-      <h3>EARCO NeoBuds Earphones</h3>
-      <p>Lightweight earbuds with clear stereo sound.</p>
-      <h4>R150.00</h4>
-      <button onclick="addToCart('EARCO NeoBuds Earphones',150)">Add To Cart</button>
-    </div>
-
-    <!-- PRODUCT 3 -->
-    <div class="product">
-      <img src="images/phones4.jpg" alt="EARCO MiniBoom Speaker">
-      <h3>EARCO MiniBoom Speaker</h3>
-      <p>Portable bluetooth speaker with deep bass.</p>
-      <h4>R99.99</h4>
-      <button onclick="addToCart('EARCO MiniBoom Speaker',99.99)">Add To Cart</button>
-    </div>
-
-    <!-- PRODUCT 4 -->
-    <div class="product">
-      <img src="images/phone3.jpg" alt="EARCO ComfortPads">
-      <h3>EARCO ComfortPads</h3>
-      <p>Soft replacement ear cushions for headphones.</p>
-      <h4>R250.00</h4>
-      <button onclick="addToCart('EARCO ComfortPads',250)">Add To Cart</button>
-    </div>
-
-    <!-- PRODUCT 5 -->
-    <div class="product">
-      <img src="images/phone-1.jpg" alt="EARCO BassMax Headphones">
-      <h3>EARCO BassMax Headphones</h3>
-      <p>Studio level headphones for music lovers.</p>
-      <h4>R320.00</h4>
-      <button onclick="addToCart('EARCO BassMax Headphones',320)">Add To Cart</button>
-    </div>
-
-    <!-- PRODUCT 6 -->
-    <div class="product">
-      <img src="images/pone-2.jpg" alt="EARCO AirPods Pro">
-      <h3>EARCO AirPods Pro</h3>
-      <p>Compact wireless earbuds with noise isolation.</p>
-      <h4>R180.00</h4>
-      <button onclick="addToCart('EARCO AirPods Pro',180)">Add To Cart</button>
-    </div>
-
+    <div class="product"><img src="images/phone-5.jpg" alt="EARCO PulseX Headphones" loading="lazy"><h3>EARCO PulseX Headphones</h3><p>Powerful bass wireless headphones.</p><h4>R200</h4><button onclick="addToCart('EARCO PulseX Headphones',200)">Add To Cart</button></div>
+    <div class="product"><img src="images/phine-7.jpg" alt="EARCO NeoBuds Earphones" loading="lazy"><h3>EARCO NeoBuds Earphones</h3><p>Lightweight earbuds with clear stereo sound.</p><h4>R150.00</h4><button onclick="addToCart('EARCO NeoBuds Earphones',150)">Add To Cart</button></div>
+    <div class="product"><img src="images/phones4.jpg" alt="EARCO MiniBoom Speaker" loading="lazy"><h3>EARCO MiniBoom Speaker</h3><p>Portable bluetooth speaker with deep bass.</p><h4>R99.99</h4><button onclick="addToCart('EARCO MiniBoom Speaker',99.99)">Add To Cart</button></div>
+    <div class="product"><img src="images/phone3.jpg" alt="EARCO ComfortPads" loading="lazy"><h3>EARCO ComfortPads</h3><p>Soft replacement ear cushions for headphones.</p><h4>R250.00</h4><button onclick="addToCart('EARCO ComfortPads',250)">Add To Cart</button></div>
+    <div class="product"><img src="images/phone-1.jpg" alt="EARCO BassMax Headphones" loading="lazy"><h3>EARCO BassMax Headphones</h3><p>Studio level headphones for music lovers.</p><h4>R320.00</h4><button onclick="addToCart('EARCO BassMax Headphones',320)">Add To Cart</button></div>
+    <div class="product"><img src="images/pone-2.jpg" alt="EARCO AirPods Pro" loading="lazy"><h3>EARCO AirPods Pro</h3><p>Compact wireless earbuds with noise isolation.</p><h4>R180.00</h4><button onclick="addToCart('EARCO AirPods Pro',180)">Add To Cart</button></div>
   </div>
 </section>
 
@@ -116,5 +70,6 @@ function addToCart(name, price){
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
 
+<script src="loader.js"></script>
 </body>
 </html>

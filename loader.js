@@ -1,0 +1,7 @@
+
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    const loader = document.getElementById('loader');
+    if(loader) loader.classList.add('hide');
+  }, 1500);
+});

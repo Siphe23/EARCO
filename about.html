@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About EARCO</title>
   <link rel="stylesheet" href="about.css">
-  <!-- FONT AWESOME -->
+  <link rel="stylesheet" href="loader.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>.shop-btn { text-decoration: none; }</style>
 </head>
-
 <body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-dots"><span></span><span></span><span></span><span></span></div>
+</div>
 
   <!-- HEADER -->
   <header class="header">
@@ -22,11 +25,9 @@
     </div>
     <nav>
       <ul id="navMenu">
-        <li class="cart-link">
-          <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
-        </li>
         <li><a href="index.html">HOME</a></li>
         <li><a href="about.html">ABOUT US</a></li>
+        <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
         <li class="dropdown">
           <button class="account-btn">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
           <div class="dropdown-content">
@@ -40,53 +41,24 @@
 
   <!-- ABOUT PAGE -->
   <main class="about-main">
-
-    <!-- TOP SECTION: Big title centered, small image top-right -->
     <section class="about-title-section">
       <div class="about-title-block">
         <h1 class="about-page-title">ABOUT<br>EARCO</h1>
         <div class="title-divider"></div>
       </div>
-      <div class="about-hero-image">
-        <img src="images/phone-1.jpg" alt="EARCO headphones">
-      </div>
     </section>
 
-    <!-- CARDS SECTION: 5 info cards matching the screenshots -->
     <section class="about-cards-section">
-
-      <div class="about-card">
-        <i class="fa-solid fa-headphones about-card-icon"></i>
-        <p>EARCO is a modern audio technology brand built for people who love great sound and modern style.</p>
-      </div>
-
-      <div class="about-card">
-        <i class="fa-solid fa-headphones about-card-icon"></i>
-        <p>We design high-quality headphones, earphones, ear pads, and mini Bluetooth speakers that focus on comfort, performance, and durability.</p>
-      </div>
-
-      <div class="about-card">
-        <i class="fa-solid fa-headphones about-card-icon"></i>
-        <p>Our products use advanced audio technology to deliver clear sound, powerful bass, and smooth listening experiences.</p>
-      </div>
-
-      <div class="about-card">
-        <i class="fa-solid fa-headphones about-card-icon"></i>
-        <p>At EARCO, we believe premium sound should be affordable, reliable, and available to everyone.</p>
-      </div>
-
-      <div class="about-card">
-        <i class="fa-solid fa-headphones about-card-icon"></i>
-        <p>Our goal is to improve your listening experience every day. EARCO — Sound That Moves You.</p>
-      </div>
-
+      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>EARCO is a modern audio technology brand built for people who love great sound and modern style.</p></div>
+      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>We design high-quality headphones, earphones, ear pads, and mini Bluetooth speakers that focus on comfort, performance, and durability.</p></div>
+      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>Our products use advanced audio technology to deliver clear sound, powerful bass, and smooth listening experiences.</p></div>
+      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>At EARCO, we believe premium sound should be affordable, reliable, and available to everyone.</p></div>
+      <div class="about-card"><i class="fa-solid fa-headphones about-card-icon"></i><p>Our goal is to improve your listening experience every day. EARCO — Sound That Moves You.</p></div>
     </section>
 
-    <!-- SHOP NOW BUTTON -->
     <div class="shop-btn-wrapper">
-      <a href="index.html" class="shop-btn">SHOP NOW &gt;</a>
+      <a href="products.html" class="shop-btn">SHOP NOW</a>
     </div>
-
   </main>
 
   <!-- FOOTER -->
@@ -99,5 +71,6 @@
     <p>© 2026 EARCO. All Rights Reserved</p>
   </footer>
 
+<script src="loader.js"></script>
 </body>
 </html>

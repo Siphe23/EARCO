@@ -1,0 +1,55 @@
+/* ===== EARCO LOADER ===== */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0f2a36;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.loader-dots span {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #4aa3df;
+  animation: bounce 0.6s ease-in-out infinite alternate;
+}
+
+.loader-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+  background-color: #ffffff;
+}
+
+.loader-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+  background-color: #4aa3df;
+}
+
+.loader-dots span:nth-child(4) {
+  animation-delay: 0.45s;
+  background-color: #ffffff;
+}
+
+@keyframes bounce {
+  0%   { transform: translateY(0);     opacity: 0.3; }
+  100% { transform: translateY(-18px); opacity: 1;   }
+}
