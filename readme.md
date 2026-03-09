@@ -1,5 +1,8 @@
 # EARCO Headphones Website
 
+#### LIVE DEMO
+[View the EARCO Website](https://earco.vercel.app/)
+
 > A clean, modern e-commerce style platform for discovering and exploring high-quality headphones.
 
 ---
@@ -63,7 +66,7 @@ EARCO/
 **Nasiphi Siphesihle Ndzumo**
 
 ---
-## Live Demo
+#### LIVE DEMO
 [View the EARCO Website](https://earco.vercel.app/)
 ## 📝 Notes
 
