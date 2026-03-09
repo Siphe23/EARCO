@@ -63,7 +63,8 @@ EARCO/
 **Nasiphi Siphesihle Ndzumo**
 
 ---
-
+## Live Demo
+[View the EARCO Website](https://earco.vercel.app/)
 ## 📝 Notes
 
 This project demonstrates the use of core front-end technologies — HTML, CSS, and JavaScript — to build a simple e-commerce style website. It serves as a practical example of how to structure and style a product-focused web page without the use of frameworks or external libraries.
