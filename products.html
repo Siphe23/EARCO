@@ -7,20 +7,6 @@
 <link rel="stylesheet" href="products.css">
 <link rel="stylesheet" href="loader.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<script>
-function addToCart(name, price){
-  if(localStorage.getItem("loggedIn") !== "true"){
-    if(confirm("You need an account to buy. Go to Sign Up?")){
-      window.location.href = "signup.html";
-    }
-    return;
-  }
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push({ name, price });
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert(name + " added to cart!");
-}
-</script>
 </head>
 <body>
 
@@ -38,12 +24,18 @@ function addToCart(name, price){
     <ul id="navMenu">
       <li><a href="index.html">HOME</a></li>
       <li><a href="about.html">ABOUT US</a></li>
-      <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+      <li class="cart-link">
+        <a href="javascript:void(0)" onclick="goToCart()">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+      </li>
       <li class="dropdown" id="accountDropdown">
-        <button class="account-btn" onclick="toggleDropdown(event)">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
+        <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
+          ACCOUNT <i class="fa-solid fa-caret-down"></i>
+        </button>
         <div class="dropdown-content" id="dropdownMenu">
           <a href="login.html">Login</a>
-          <a href="signup.html">Sign Up</a>
+          <a href="login.html">Sign Up</a>
         </div>
       </li>
     </ul>
@@ -65,18 +57,63 @@ function addToCart(name, price){
   <div id="footerLinks">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
-    <a href="login.html">Login</a>
+    <a href="javascript:void(0)" onclick="goToCart()">Cart</a>
+    <span id="footerAuth"></span>
   </div>
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
 
 <script src="loader.js"></script>
 <script>
+  const loggedIn = localStorage.getItem("loggedIn") === "true";
+  const username = localStorage.getItem("username");
+
+  /* Update header account button */
+  if (loggedIn && username) {
+    document.getElementById('accountBtn').innerHTML =
+      `<i class="fa-solid fa-user"></i> ${username} <i class="fa-solid fa-caret-down"></i>`;
+    document.getElementById('dropdownMenu').innerHTML =
+      `<a href="#" onclick="logout()">Logout</a>`;
+  }
+
+  /* Update footer */
+  const footerAuth = document.getElementById('footerAuth');
+  if (loggedIn) {
+    footerAuth.innerHTML = `<a href="#" onclick="logout()">Logout</a>`;
+  } else {
+    footerAuth.innerHTML = `<a href="login.html">Login</a>`;
+  }
+
+  /* Cart icon — go to cart if logged in, else login */
+  function goToCart() {
+    window.location.href = loggedIn ? "cart.html" : "login.html";
+  }
+
+  /* Add to cart — redirect to login if not logged in */
+  function addToCart(name, price) {
+    if (!loggedIn) {
+      window.location.href = "login.html";
+      return;
+    }
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push({ name, price });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(name + " added to cart!");
+  }
+
+  /* Logout */
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("username");
+    window.location.href = "index.html";
+  }
+
+  /* Dropdown */
   function toggleDropdown(e) {
     e.stopPropagation();
     document.getElementById('dropdownMenu').classList.toggle('open');
   }
-  document.addEventListener('click', function() {
+  document.addEventListener('click', function () {
     document.getElementById('dropdownMenu').classList.remove('open');
   });
 </script>

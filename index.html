@@ -10,22 +10,10 @@
 <style>
   .btn { text-decoration: none; }
   a.btn { text-decoration: none; }
-
-  /* Fix dropdown to work on click */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background: #2d5f7a;
-    min-width: 140px;
-    border-radius: 6px;
-    top: 42px;
-    right: 0;
-    overflow: hidden;
-    z-index: 999;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  }
-
+  .dropdown-content { display: none; position: absolute; background: #2d5f7a; min-width: 140px; border-radius: 6px; top: 42px; right: 0; overflow: hidden; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
   .dropdown-content.open { display: block; }
+  .dropdown-content a { display: block; padding: 10px 14px; color: white; text-decoration: none; font-size: 14px; transition: 0.2s; }
+  .dropdown-content a:hover { background: #4aa3df; }
 </style>
 </head>
 <body>
@@ -47,10 +35,12 @@
       <li><a href="about.html">ABOUT US</a></li>
       <li><a href="products.html">ALL PRODUCTS</a></li>
       <li class="dropdown" id="accountDropdown">
-        <button class="account-btn" onclick="toggleDropdown()">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
+        <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
+          ACCOUNT <i class="fa-solid fa-caret-down"></i>
+        </button>
         <div class="dropdown-content" id="dropdownMenu">
           <a href="login.html">Login</a>
-          <a href="signup.html">Sign Up</a>
+          <a href="login.html">Sign Up</a>
         </div>
       </li>
     </ul>
@@ -116,49 +106,81 @@
 
 <script src="loader.js"></script>
 <script>
-function playVideo(){ let v=document.getElementById("productVideo"); if(v) v.play(); }
+  const loggedIn = localStorage.getItem("loggedIn") === "true";
+  const username = localStorage.getItem("username");
 
-/* DROPDOWN TOGGLE — works on both desktop and mobile */
-function toggleDropdown() {
-  const menu = document.getElementById('dropdownMenu');
-  menu.classList.toggle('open');
-}
-
-// Close dropdown when clicking anywhere else
-document.addEventListener('click', function(e) {
-  const dropdown = document.getElementById('accountDropdown');
-  if (dropdown && !dropdown.contains(e.target)) {
-    document.getElementById('dropdownMenu').classList.remove('open');
+  /* ---- DROPDOWN ---- */
+  function toggleDropdown(e) {
+    e.stopPropagation();
+    const menu = document.getElementById('dropdownMenu');
+    if (menu) menu.classList.toggle('open');
   }
-});
+  document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('accountDropdown');
+    const menu = document.getElementById('dropdownMenu');
+    if (menu && dropdown && !dropdown.contains(e.target)) {
+      menu.classList.remove('open');
+    }
+  });
 
-/* HEADER LOGIN CHECK */
-const nav = document.getElementById("navMenu");
-if(localStorage.getItem("loggedIn")==="true"){
-  nav.innerHTML=`
-    <li><a href="index.html">HOME</a></li>
-    <li><a href="contact.html">CONTACT</a></li>
-    <li><a href="payment.html">PAY NOW</a></li>
-    <li><a href="#" onclick="logout()">LOGOUT</a></li>
-    <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
-  `;
-}
+  /* ---- CART ---- */
+  function goToCart() {
+    window.location.href = loggedIn ? "cart.html" : "login.html";
+  }
 
-/* FOOTER LOGIN CHECK */
-const footer = document.getElementById("footerLinks");
-if(localStorage.getItem("loggedIn")==="true"){
-  footer.innerHTML=`
-    <a href="contact.html">Contact</a>
-    <a href="cart.html">Cart</a>
-    <a href="payment.html">Pay Now</a>
-    <a href="#" onclick="logout()">Logout</a>
-  `;
-}
+  /* ---- VIDEO ---- */
+  function playVideo() {
+    const v = document.getElementById("productVideo");
+    if (v) v.play();
+  }
 
-function logout(){
-  localStorage.removeItem("loggedIn");
-  window.location.href="index.html";
-}
+  /* ---- LOGOUT ---- */
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("username");
+    window.location.href = "index.html";
+  }
+
+  /* ---- HEADER: update when logged in ---- */
+  if (loggedIn) {
+    const nav = document.getElementById("navMenu");
+    nav.innerHTML = `
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT US</a></li>
+      <li><a href="products.html">ALL PRODUCTS</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
+      <li class="cart-link"><a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a></li>
+      <li class="dropdown" id="accountDropdown">
+        <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
+          <i class="fa-solid fa-user"></i> ${username || 'ACCOUNT'} <i class="fa-solid fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="dropdownMenu">
+          <a href="javascript:void(0)" onclick="goToCart()">My Cart</a>
+          <a href="payment.html">Pay Now</a>
+          <a href="javascript:void(0)" onclick="logout()">Logout</a>
+        </div>
+      </li>
+    `;
+    /* Re-attach outside-click listener after DOM update */
+    setTimeout(() => {
+      document.addEventListener('click', function closeDD() {
+        const menu = document.getElementById('dropdownMenu');
+        if (menu) menu.classList.remove('open');
+        document.removeEventListener('click', closeDD);
+      });
+    }, 0);
+  }
+
+  /* ---- FOOTER: update when logged in ---- */
+  if (loggedIn) {
+    document.getElementById("footerLinks").innerHTML = `
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="javascript:void(0)" onclick="goToCart()">Cart</a>
+      <a href="javascript:void(0)" onclick="logout()">Logout</a>
+    `;
+  }
 </script>
 </body>
 </html>

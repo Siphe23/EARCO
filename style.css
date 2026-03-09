@@ -85,7 +85,7 @@ nav a:hover { color: #4aa3df; }
   transition: 0.3s;
 }
 
-.account-btn:hover { background: #4aa3df; }
+.account-btn:hover { background: #062539; }
 
 /* DROPDOWN */
 .dropdown { position: relative; }
@@ -112,7 +112,7 @@ nav a:hover { color: #4aa3df; }
   transition: 0.2s;
 }
 
-.dropdown-content a:hover { background: #4aa3df; }
+.dropdown-content a:hover { background: #07273c; }
 /* dropdown now controlled by JS click — see index.html */
 
 /* ===== HERO ===== */
@@ -183,7 +183,7 @@ nav a:hover { color: #4aa3df; }
   border-radius: 4px;
 }
 
-.btn:hover { background: #4aa3df; }
+.btn:hover { background: #092335; }
 
 /* ===== DISCOVER ===== */
 .discover {
@@ -292,7 +292,7 @@ video {
   transition: 0.3s;
 }
 
-.play-button:hover { background: #2d5f7a; }
+.play-button:hover { background: #052535; }
 
 /* FEATURE GRID */
 .feature-grid {

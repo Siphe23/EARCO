@@ -3,12 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact EARCO</title>
-<link rel="stylesheet" href="contact.css">
+<title>EARCO Cart</title>
+<link rel="stylesheet" href="cart.css">
 <link rel="stylesheet" href="loader.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+
+<script>
+  if(localStorage.getItem("loggedIn") !== "true"){
+    window.location.href = "login.html";
+  }
+</script>
 
 <!-- LOADER -->
 <div id="loader">
@@ -25,53 +31,54 @@
     <ul id="navMenu">
       <li><a href="index.html">HOME</a></li>
       <li><a href="about.html">ABOUT US</a></li>
-      <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
-      <li class="dropdown">
-        <button class="account-btn">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
-        <div class="dropdown-content">
+      <li><a href="products.html">ALL PRODUCTS</a></li>
+      <li class="cart-link">
+        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+      </li>
+      <li class="dropdown" id="accountDropdown">
+        <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
+          ACCOUNT <i class="fa-solid fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content" id="dropdownMenu">
           <a href="login.html">Login</a>
-          <a href="signup.html">Sign Up</a>
+          <a href="login.html">Sign Up</a>
         </div>
       </li>
     </ul>
   </nav>
 </header>
 
-<!-- CONTACT SECTION -->
-<section class="contact">
-  <h1>CONTACT</h1>
+<!-- CART PAGE -->
+<section class="cart-page">
+  <div class="cart-box">
 
-  <form action="https://formspree.io/f/mreyedzv" method="POST">
-    <input type="hidden" name="_subject" value="New EARCO Contact Message">
+    <div class="cart-topbar">
+      <h2><i class="fa-solid fa-cart-shopping"></i> CART <span id="itemCount">(0 items)</span></h2>
+      <a href="products.html" class="continue-btn"><i class="fa-solid fa-arrow-left"></i> Continue Shopping</a>
+    </div>
 
-    <div class="row">
-      <div class="input-group">
-        <label>First Name</label>
-        <input type="text" name="first_name" placeholder="Enter your first name" required>
+    <div class="cart-divider"></div>
+
+    <div class="empty-cart" id="emptyCart">
+      <i class="fa-solid fa-box-open"></i>
+      <p>Your cart is empty.</p>
+      <a href="products.html" class="shop-now-btn">Start Shopping</a>
+    </div>
+
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-divider"></div>
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cartTotal" class="total-amount">R0.00</span>
       </div>
-      <div class="input-group">
-        <label>Last Name</label>
-        <input type="text" name="last_name" placeholder="Enter your last name" required>
+      <div class="cart-actions">
+        <a href="products.html" class="btn-secondary"><i class="fa-solid fa-arrow-left"></i> Continue Shopping</a>
+        <button class="btn-checkout" id="checkoutBtn">Checkout <i class="fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
 
-    <label>Email</label>
-    <input type="email" name="email" placeholder="Enter your email" required>
-
-    <label>Subject</label>
-    <input type="text" name="subject" placeholder="Enter subject">
-
-    <label>Message</label>
-    <textarea name="message" rows="6" placeholder="Write your message here" required></textarea>
-
-    <button type="submit">Send Message</button>
-  </form>
-
-  <div class="contact-info">
-    <h3>Get In Touch</h3>
-    <p>Have questions about our products or need support? Contact EARCO and our team will help you.</p>
-    <p><i class="fa-solid fa-phone"></i> +27 67670454</p>
-    <p><i class="fa-solid fa-envelope"></i> nasiphisiphesihlendzumo@gmail.com</p>
   </div>
 </section>
 
@@ -80,11 +87,96 @@
   <div id="footerLinks">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
-    <a href="login.html">Login</a>
+    <a href="products.html">Products</a>
+    <a href="#" onclick="logout()">Logout</a>
   </div>
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
 
 <script src="loader.js"></script>
+<script>
+  const username = localStorage.getItem("username");
+
+  /* Show username in header, hide Login/Signup */
+  if (username) {
+    document.getElementById('accountBtn').innerHTML =
+      `<i class="fa-solid fa-user"></i> ${username} <i class="fa-solid fa-caret-down"></i>`;
+    document.getElementById('dropdownMenu').innerHTML =
+      `<a href="#" onclick="logout()">Logout</a>`;
+  }
+
+  /* Dropdown */
+  function toggleDropdown(e) {
+    e.stopPropagation();
+    document.getElementById('dropdownMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', function () {
+    document.getElementById('dropdownMenu').classList.remove('open');
+  });
+
+  /* Logout */
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("username");
+    window.location.href = "index.html";
+  }
+
+  /* Cart render */
+  function renderCart() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItemsDiv = document.getElementById("cartItems");
+    const emptyCart = document.getElementById("emptyCart");
+    const cartFooter = document.getElementById("cartFooter");
+    const cartTotal = document.getElementById("cartTotal");
+    const itemCount = document.getElementById("itemCount");
+
+    cartItemsDiv.innerHTML = "";
+    let total = 0;
+
+    itemCount.textContent = `(${cart.length} item${cart.length !== 1 ? 's' : ''})`;
+
+    if (cart.length === 0) {
+      emptyCart.style.display = "flex";
+      cartFooter.style.display = "none";
+    } else {
+      emptyCart.style.display = "none";
+      cartFooter.style.display = "block";
+
+      cart.forEach((item, index) => {
+        total += parseFloat(item.price);
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <img src="images/${item.name.toLowerCase().replace(/\s/g,'-')}.jpg"
+               alt="${item.name}"
+               onerror="this.src='images/placeholder.jpg'">
+          <div class="cart-item-info">
+            <h3>${item.name}</h3>
+            <p class="item-price">R${parseFloat(item.price).toFixed(2)}</p>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        `;
+        cartItemsDiv.appendChild(div);
+      });
+
+      cartTotal.textContent = "R" + total.toFixed(2);
+    }
+  }
+
+  function removeItem(index) {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  document.getElementById("checkoutBtn").addEventListener("click", () => {
+    window.location.href = "payment.html";
+  });
+
+  renderCart();
+</script>
 </body>
 </html>
