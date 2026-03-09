@@ -1,27 +1,27 @@
-# 🎧 EARCO Headphones Website
+# EARCO Headphones Website
 
 > A clean, modern e-commerce style platform for discovering and exploring high-quality headphones.
 
 ---
 
-## 📖 Description
+## Description
 
 **EARCO** is an online website designed to showcase and sell premium headphones. The platform helps users explore different headphone products, learn about their features, and enjoy a smooth browsing experience before purchasing. Built with a focus on clean design and simplicity, EARCO delivers a user-friendly interface for audio enthusiasts who value both great sound and great design.
 
 ---
 
-## ✨ Features
+## Features
 
-- 🏠 **Modern Homepage** — Visually engaging landing page with a full background image
-- 🔗 **Navigation Bar** — Easy access to Home, About, Products, and Contact pages
-- 🎧 **Product Section** — Displays a range of headphone products with clear presentation
-- 📱 **Responsive Design** — Clean and adaptive layout that works across screen sizes
-- 🖱️ **Interactive Elements** — JavaScript-powered features for a dynamic user experience
-- 💡 **User-Friendly Layout** — Simple, intuitive structure focused on the browsing experience
+**Modern Homepage**: Visually engaging landing page with a full background image
+**Navigation Bar**: Easy access to Home, About, Products, and Contact pages
+**Product Section**: Displays a range of headphone products with clear presentation
+**Responsive Design**: Clean and adaptive layout that works across screen sizes
+**Interactive Elements**: JavaScript-powered features for a dynamic user experience
+**User-Friendly Layout**: Simple, intuitive structure focused on the browsing experience
 
 ---
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 | Technology | Purpose |
 |------------|---------|
@@ -31,13 +31,13 @@
 
 ---
 
-## 🎯 Purpose
+## Purpose
 
 The goal of the EARCO website is to present quality headphones in a clear and attractive way, giving users an enjoyable browsing experience. The site focuses on combining good aesthetics with straightforward product discovery — making it easy for users to find and learn about audio products they'll love.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 EARCO/
@@ -50,7 +50,7 @@ EARCO/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 1. **Clone or download** the project files to your local machine.
 2. Open `index.html` in any modern web browser.
@@ -58,7 +58,7 @@ EARCO/
 
 ---
 
-## 👤 Author
+## Author
 
 **Nasiphi Siphesihle Ndzumo**
 
