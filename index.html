@@ -84,13 +84,13 @@
   <div class="video-box">
     <div class="video-wrapper">
       <video id="productVideo"><source src="HeadPhones.mp4" type="video/mp4"></video>
-      <div class="play-button" onclick="playVideo()">▶</div>
+      <div class="play-button" onclick="playVideo()">&#9654;</div>
     </div>
   </div>
   <div class="feature-grid">
-    <div class="feature"><h3>🎧</h3><h4>Premium Materials</h4><p>Crafted with high quality and durable materials.</p></div>
-    <div class="feature"><h3>⚙️</h3><h4>Advanced Technology</h4><p>Built with modern audio technology for clear powerful sound.</p></div>
-    <div class="feature"><h3>💡</h3><h4>Comfortable Design</h4><p>Lightweight and soft ear cushions designed for long listening comfort.</p></div>
+    <div class="feature"><h3>&#127911;</h3><h4>Premium Materials</h4><p>Crafted with high quality and durable materials.</p></div>
+    <div class="feature"><h3>&#9881;&#65039;</h3><h4>Advanced Technology</h4><p>Built with modern audio technology for clear powerful sound.</p></div>
+    <div class="feature"><h3>&#128161;</h3><h4>Comfortable Design</h4><p>Lightweight and soft ear cushions designed for long listening comfort.</p></div>
   </div>
 </section>
 
@@ -101,25 +101,26 @@
     <a href="about.html">About</a>
     <a href="login.html">Login</a>
   </div>
-  <p>© 2026 EARCO. All Rights Reserved</p>
+  <p>&copy; 2026 EARCO. All Rights Reserved</p>
 </footer>
 
 <script src="loader.js"></script>
 <script>
-  const loggedIn = localStorage.getItem("loggedIn") === "true";
-  const username = localStorage.getItem("username");
+  var loggedIn = localStorage.getItem("loggedIn") === "true";
+  var username = localStorage.getItem("username") || "ACCOUNT";
 
   /* ---- DROPDOWN ---- */
   function toggleDropdown(e) {
     e.stopPropagation();
-    const menu = document.getElementById('dropdownMenu');
-    if (menu) menu.classList.toggle('open');
+    var menu = document.getElementById("dropdownMenu");
+    if (menu) menu.classList.toggle("open");
   }
-  document.addEventListener('click', function(e) {
-    const dropdown = document.getElementById('accountDropdown');
-    const menu = document.getElementById('dropdownMenu');
+
+  document.addEventListener("click", function(e) {
+    var dropdown = document.getElementById("accountDropdown");
+    var menu = document.getElementById("dropdownMenu");
     if (menu && dropdown && !dropdown.contains(e.target)) {
-      menu.classList.remove('open');
+      menu.classList.remove("open");
     }
   });
 
@@ -130,7 +131,7 @@
 
   /* ---- VIDEO ---- */
   function playVideo() {
-    const v = document.getElementById("productVideo");
+    var v = document.getElementById("productVideo");
     if (v) v.play();
   }
 
@@ -141,45 +142,34 @@
     window.location.href = "index.html";
   }
 
-  /* ---- HEADER: update when logged in ---- */
+  /* ---- UPDATE HEADER WHEN LOGGED IN ---- */
   if (loggedIn) {
-    const nav = document.getElementById("navMenu");
-    nav.innerHTML = `
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="about.html">ABOUT US</a></li>
-      <li><a href="products.html">ALL PRODUCTS</a></li>
-      <li><a href="contact.html">CONTACT</a></li>
-      <li class="cart-link"><a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a></li>
-      <li class="dropdown" id="accountDropdown">
-        <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
-          <i class="fa-solid fa-user"></i> ${username || 'ACCOUNT'} <i class="fa-solid fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content" id="dropdownMenu">
-          <a href="javascript:void(0)" onclick="goToCart()">My Cart</a>
-          <a href="payment.html">Pay Now</a>
-          <a href="javascript:void(0)" onclick="logout()">Logout</a>
-        </div>
-      </li>
-    `;
-    /* Re-attach outside-click listener after DOM update */
-    setTimeout(() => {
-      document.addEventListener('click', function closeDD() {
-        const menu = document.getElementById('dropdownMenu');
-        if (menu) menu.classList.remove('open');
-        document.removeEventListener('click', closeDD);
-      });
-    }, 0);
+    document.getElementById("navMenu").innerHTML =
+      '<li><a href="index.html">HOME</a></li>' +
+      '<li><a href="about.html">ABOUT US</a></li>' +
+      '<li><a href="products.html">ALL PRODUCTS</a></li>' +
+      '<li><a href="contact.html">CONTACT</a></li>' +
+      '<li class="cart-link"><a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a></li>' +
+      '<li class="dropdown" id="accountDropdown">' +
+        '<button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">' +
+          '<i class="fa-solid fa-user"></i> ' + username + ' <i class="fa-solid fa-caret-down"></i>' +
+        '</button>' +
+        '<div class="dropdown-content" id="dropdownMenu">' +
+          '<a href="javascript:void(0)" onclick="goToCart()">My Cart</a>' +
+          '<a href="payment.html">Pay Now</a>' +
+          '<a href="javascript:void(0)" onclick="logout()">Logout</a>' +
+        '</div>' +
+      '</li>';
   }
-<h1>New Version Test</h1>
-  /* ---- FOOTER: update when logged in ---- */
+
+  /* ---- UPDATE FOOTER WHEN LOGGED IN ---- */
   if (loggedIn) {
-    document.getElementById("footerLinks").innerHTML = `
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="javascript:void(0)" onclick="goToCart()">Cart</a>
-      <a href="javascript:void(0)" onclick="logout()">Logout</a>
-    `;
+    document.getElementById("footerLinks").innerHTML =
+      '<a href="index.html">Home</a>' +
+      '<a href="about.html">About</a>' +
+      '<a href="contact.html">Contact</a>' +
+      '<a href="javascript:void(0)" onclick="goToCart()">Cart</a>' +
+      '<a href="javascript:void(0)" onclick="logout()">Logout</a>';
   }
 </script>
 </body>
