@@ -113,7 +113,7 @@ nav a:hover { color: var(--blue); }
 
 /* ===== COMING SOON BANNER ===== */
 .coming-soon-banner {
-  background: linear-gradient(90deg, #1e4a60, #2d5f7a);
+  background: linear-gradient(90deg, #fff, #2d5f7a);
   color: var(--blue);
   text-align: center;
   padding: 14px 5%;

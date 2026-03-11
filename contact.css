@@ -31,7 +31,7 @@ body {
 }
 
 .logo h2 { color: #4aa3df; font-size: 1.6rem; letter-spacing: 2px; }
-.logo p  { font-size: 11px; letter-spacing: 2px; color: #7aa8c0; }
+.logo p  { font-size: 11px; letter-spacing: 2px; color: #fff; }
 
 nav ul {
   display: flex;
