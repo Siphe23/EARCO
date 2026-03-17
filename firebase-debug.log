@@ -1,0 +1,37 @@
+[debug] [2026-03-12T13:18:11.226Z] ----------------------------------------------------------------------
+[debug] [2026-03-12T13:18:11.245Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\27607\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2026-03-12T13:18:11.246Z] CLI Version:   13.22.1
+[debug] [2026-03-12T13:18:11.247Z] Platform:      win32
+[debug] [2026-03-12T13:18:11.247Z] Node Version:  v20.12.2
+[debug] [2026-03-12T13:18:11.247Z] Time:          Thu Mar 12 2026 15:18:11 GMT+0200 (South Africa Standard Time)
+[debug] [2026-03-12T13:18:11.248Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-03-12T13:18:11.506Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-03-12T13:18:11.507Z] > authorizing via signed-in user (nasiphisiphesihlendzumo@gmail.com)
+[debug] [2026-03-12T13:18:11.507Z] [iam] checking project earcowebsite for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-03-12T13:18:11.511Z] Checked if tokens are valid: true, expires at: 1773324367587
+[debug] [2026-03-12T13:18:11.512Z] Checked if tokens are valid: true, expires at: 1773324367587
+[debug] [2026-03-12T13:18:11.515Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/earcowebsite:testIamPermissions [none]
+[debug] [2026-03-12T13:18:11.515Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/earcowebsite:testIamPermissions x-goog-quota-user=projects/earcowebsite
+[debug] [2026-03-12T13:18:11.516Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/earcowebsite:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-03-12T13:18:13.472Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/earcowebsite:testIamPermissions 200
+[debug] [2026-03-12T13:18:13.473Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/earcowebsite:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-03-12T13:18:13.475Z] Checked if tokens are valid: true, expires at: 1773324367587
+[debug] [2026-03-12T13:18:13.475Z] Checked if tokens are valid: true, expires at: 1773324367587
+[debug] [2026-03-12T13:18:13.476Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/earcowebsite [none]
+[debug] [2026-03-12T13:18:14.160Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/earcowebsite 200
+[debug] [2026-03-12T13:18:14.160Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/earcowebsite {"projectId":"earcowebsite","projectNumber":"1088125818972","displayName":"earcowebsite","name":"projects/earcowebsite","resources":{"hostingSite":"earcowebsite"},"state":"ACTIVE","etag":"1_1b1bb2ba-a251-42db-a8fe-7b45e0d6176a"}
+[info] 
+[info] === Deploying to 'earcowebsite'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-03-12T13:18:14.237Z] Checked if tokens are valid: true, expires at: 1773324367587
+[debug] [2026-03-12T13:18:14.237Z] Checked if tokens are valid: true, expires at: 1773324367587
+[debug] [2026-03-12T13:18:14.238Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/earcowebsite/versions [none]
+[debug] [2026-03-12T13:18:14.239Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/earcowebsite/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2026-03-12T13:18:18.130Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/earcowebsite/versions 200
+[debug] [2026-03-12T13:18:18.131Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/earcowebsite/versions {"name":"projects/1088125818972/sites/earcowebsite/versions/e7148614fa09bf03","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[earcowebsite]: beginning deploy... 
+[info] i  hosting[earcowebsite]: found 266827 files in . 
+[debug] [2026-03-12T13:42:43.366Z] [hosting] uploading with 200 concurrency
+[debug] [2026-03-12T13:42:43.482Z] [hosting] hash cache [] not populated
