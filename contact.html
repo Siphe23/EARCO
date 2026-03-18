@@ -7,10 +7,6 @@
 <link rel="stylesheet" href="contact.css">
 <link rel="stylesheet" href="loader.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<style>
-  .cart-link { position: relative; }
-  .cart-badge { position: absolute; top: -8px; right: -8px; background: #e74c3c; color: white; font-size: 10px; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-</style>
 </head>
 <body>
 
@@ -27,22 +23,14 @@
   </div>
   <nav>
     <ul id="navMenu">
-      <li><a href="/">HOME</a></li>
-      <li><a href="/about">ABOUT US</a></li>
-      <li><a href="/products">ALL PRODUCTS</a></li>
-      <li class="cart-link">
-        <a href="javascript:void(0)" onclick="goToCart()">
-          <i class="fa-solid fa-cart-shopping"></i>
-        </a>
-        <span class="cart-badge" id="cartBadge" style="display:none"></span>
-      </li>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT US</a></li>
+      <li class="cart-link"><a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a></li>
       <li class="dropdown" id="accountDropdown">
-        <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
-          ACCOUNT <i class="fa-solid fa-caret-down"></i>
-        </button>
+        <button class="account-btn" onclick="toggleDropdown(event)">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
         <div class="dropdown-content" id="dropdownMenu">
-          <a href="/login">Login</a>
-          <a href="/login">Sign Up</a>
+          <a href="login.html">Login</a>
+          <a href="signup.html">Sign Up</a>
         </div>
       </li>
     </ul>
@@ -74,7 +62,7 @@
     <button type="submit">Send Message</button>
   </form>
 
-  <!-- CONTACT INFO -->
+  <!-- CONTACT INFO — details hidden until revealed -->
   <div class="contact-info">
     <h3>Get In Touch</h3>
     <p>Have questions about our products or need support? Fill in the form above or reach out directly.</p>
@@ -87,10 +75,10 @@
     </div>
 
     <div class="reveal-row">
-      <button class="reveal-btn" onclick="revealContact('emailDetail', this)">
+      <button class="reveal-btn" onclick="revealContact('email', this)">
         <i class="fa-solid fa-envelope"></i> Show Email Address
       </button>
-      <span class="contact-detail" id="emailDetail" style="display:none"></span>
+      <span class="contact-detail" id="email" style="display:none"></span>
     </div>
   </div>
 </section>
@@ -98,62 +86,15 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div id="footerLinks">
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/products">Products</a>
-    <span id="footerAuth"></span>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="login.html">Login</a>
   </div>
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
 
 <script src="loader.js"></script>
 <script>
-  const loggedIn = localStorage.getItem("loggedIn") === "true";
-  const username = localStorage.getItem("username");
-
-  /* Cart badge */
-  function updateBadge() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-    const badge = document.getElementById("cartBadge");
-    if (badge) {
-      badge.textContent = totalQty;
-      badge.style.display = totalQty > 0 ? "flex" : "none";
-    }
-  }
-  updateBadge();
-
-  /* Update header if logged in */
-  if (loggedIn && username) {
-    document.getElementById('accountBtn').innerHTML =
-      `<i class="fa-solid fa-user"></i> ${username} <i class="fa-solid fa-caret-down"></i>`;
-    document.getElementById('dropdownMenu').innerHTML =
-      `<a href="javascript:void(0)" onclick="goToCart()">My Cart</a>
-       <a href="/payment">Pay Now</a>
-       <a href="javascript:void(0)" onclick="logout()">Logout</a>`;
-  }
-
-  /* Update footer */
-  const footerAuth = document.getElementById('footerAuth');
-  if (loggedIn) {
-    footerAuth.innerHTML = `<a href="javascript:void(0)" onclick="logout()">Logout</a>`;
-  } else {
-    footerAuth.innerHTML = `<a href="/login">Login</a>`;
-  }
-
-  /* Cart */
-  function goToCart() {
-    window.location.href = loggedIn ? "/cart" : "/login";
-  }
-
-  /* Logout */
-  function logout() {
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("username");
-    localStorage.removeItem("cart");
-    window.location.href = "/";
-  }
-
   /* Dropdown */
   function toggleDropdown(e) {
     e.stopPropagation();
@@ -163,10 +104,10 @@
     document.getElementById('dropdownMenu').classList.remove('open');
   });
 
-  /* Reveal contact details */
+  /* Reveal contact details only on click — not visible to bots or scrapers */
   const details = {
     phone: ['+27', '67', '670454'].join(' '),
-    emailDetail: ['nasiphisiphesihle', 'ndzumo', '@gmail.com'].join('')
+    email: ['nasiphisiphesihle', 'ndzumo', '@gmail.com'].join('')
   };
 
   function revealContact(type, btn) {

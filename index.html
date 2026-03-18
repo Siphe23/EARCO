@@ -14,8 +14,6 @@
   .dropdown-content.open { display: block; }
   .dropdown-content a { display: block; padding: 10px 14px; color: white; text-decoration: none; font-size: 14px; transition: 0.2s; }
   .dropdown-content a:hover { background: #4aa3df; }
-  .cart-link { position: relative; }
-  .cart-badge { position: absolute; top: -8px; right: -8px; background: #e74c3c; color: white; font-size: 10px; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
 </style>
 </head>
 <body>
@@ -33,16 +31,16 @@
   </div>
   <nav>
     <ul id="navMenu">
-      <li><a href="/">HOME</a></li>
-      <li><a href="/about">ABOUT US</a></li>
-      <li><a href="/products">ALL PRODUCTS</a></li>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT US</a></li>
+      <li><a href="products.html">ALL PRODUCTS</a></li>
       <li class="dropdown" id="accountDropdown">
         <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
           ACCOUNT <i class="fa-solid fa-caret-down"></i>
         </button>
         <div class="dropdown-content" id="dropdownMenu">
-          <a href="/login">Login</a>
-          <a href="/login">Sign Up</a>
+          <a href="login.html">Login</a>
+          <a href="login.html">Sign Up</a>
         </div>
       </li>
     </ul>
@@ -57,7 +55,7 @@
     </div>
     <div class="herop-text">
       <h1 class="herop-title">EXPERIENCE <br> POWERFUL SOUND <br> WITH EARCO</h1>
-      <a href="/products" class="btn">BUY IT NOW</a>
+      <a href="products.html" class="btn">BUY IT NOW</a>
     </div>
   </div>
 </section>
@@ -68,7 +66,7 @@
     <div class="discover-text">
       <h3>Discover Better Sound</h3>
       <p>Explore EARCO's premium range of high-quality audio accessories including headphones, earphones, ear pads and mini Bluetooth speakers. Designed for comfort, modern style and powerful sound performance.</p>
-      <a href="/products" class="btn">SHOP NOW</a>
+      <a href="products.html" class="btn">SHOP NOW</a>
     </div>
     <div class="discover-slider">
       <div class="slides">
@@ -80,6 +78,7 @@
   </div>
 </section>
 
+
 <!-- PRODUCT FEATURES -->
 <section class="features">
   <h2>PRODUCT FEATURES</h2>
@@ -89,15 +88,24 @@
         <source src="HeadPhones.mp4" type="video/mp4">
       </video>
       <div class="play-button" id="playBtn" onclick="toggleVideo()" style="
-        position: absolute; top: 50%; left: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%);
-        width: 56px; height: 56px;
+        width: 56px;
+        height: 56px;
         background: rgba(255,255,255,0.85);
-        border-radius: 50%; display: flex;
-        align-items: center; justify-content: center;
-        font-size: 22px; cursor: pointer;
-        color: #2d5f7a; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-        transition: opacity 0.3s; user-select: none;">&#9654;</div>
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        cursor: pointer;
+        color: #2d5f7a;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        transition: opacity 0.3s;
+        user-select: none;
+      ">&#9654;</div>
     </div>
   </div>
   <div class="feature-grid">
@@ -110,9 +118,9 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div id="footerLinks">
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-    <a href="/login">Login</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="login.html">Login</a>
   </div>
   <p>&copy; 2026 EARCO. All Rights Reserved</p>
 </footer>
@@ -122,23 +130,13 @@
   var loggedIn = localStorage.getItem("loggedIn") === "true";
   var username = localStorage.getItem("username") || "ACCOUNT";
 
-  /* Cart badge */
-  function updateBadge() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-    const badge = document.getElementById("cartBadge");
-    if (badge) {
-      badge.textContent = totalQty;
-      badge.style.display = totalQty > 0 ? "flex" : "none";
-    }
-  }
-
-  /* Dropdown */
+  /* ---- DROPDOWN ---- */
   function toggleDropdown(e) {
     e.stopPropagation();
     var menu = document.getElementById("dropdownMenu");
     if (menu) menu.classList.toggle("open");
   }
+
   document.addEventListener("click", function(e) {
     var dropdown = document.getElementById("accountDropdown");
     var menu = document.getElementById("dropdownMenu");
@@ -147,70 +145,69 @@
     }
   });
 
-  /* Cart */
+  /* ---- CART ---- */
   function goToCart() {
-    window.location.href = loggedIn ? "/cart" : "/login";
+    window.location.href = loggedIn ? "cart.html" : "login.html";
   }
 
-  /* Video */
-  function toggleVideo() {
-    var v = document.getElementById("productVideo");
-    var btn = document.getElementById("playBtn");
-    if (!v) return;
-    if (v.paused) {
-      v.play();
-      btn.style.opacity = "0";
-      btn.style.pointerEvents = "none";
-      v.onclick = function() { pauseVideo(); };
-    } else { pauseVideo(); }
+ /* ---- VIDEO ---- */
+function toggleVideo() {
+  var v = document.getElementById("productVideo");
+  var btn = document.getElementById("playBtn");
+  if (!v) return;
+  if (v.paused) {
+    v.play();
+    btn.style.opacity = "0";
+    btn.style.pointerEvents = "none";
+    v.onclick = function() { pauseVideo(); };
+  } else {
+    pauseVideo();
   }
-  function pauseVideo() {
-    var v = document.getElementById("productVideo");
-    var btn = document.getElementById("playBtn");
-    if (!v) return;
-    v.pause();
-    btn.style.opacity = "1";
-    btn.style.pointerEvents = "auto";
-    v.onclick = null;
-  }
+}
 
-  /* Logout */
+function pauseVideo() {
+  var v = document.getElementById("productVideo");
+  var btn = document.getElementById("playBtn");
+  if (!v) return;
+  v.pause();
+  btn.style.opacity = "1";
+  btn.style.pointerEvents = "auto";
+  v.onclick = null;
+}
+
+  /* ---- LOGOUT ---- */
   function logout() {
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("username");
-    window.location.href = "/";
+    window.location.href = "index.html";
   }
 
-  /* Update header when logged in */
+  /* ---- UPDATE HEADER WHEN LOGGED IN ---- */
   if (loggedIn) {
     document.getElementById("navMenu").innerHTML =
-      '<li><a href="/">HOME</a></li>' +
-      '<li><a href="/about">ABOUT US</a></li>' +
-      '<li><a href="/products">ALL PRODUCTS</a></li>' +
-      '<li><a href="/contact">CONTACT</a></li>' +
-      '<li class="cart-link">' +
-        '<a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a>' +
-        '<span class="cart-badge" id="cartBadge" style="display:none"></span>' +
-      '</li>' +
+      '<li><a href="index.html">HOME</a></li>' +
+      '<li><a href="about.html">ABOUT US</a></li>' +
+      '<li><a href="products.html">ALL PRODUCTS</a></li>' +
+      '<li><a href="contact.html">CONTACT</a></li>' +
+      '<li class="cart-link"><a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a></li>' +
       '<li class="dropdown" id="accountDropdown">' +
         '<button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">' +
           '<i class="fa-solid fa-user"></i> ' + username + ' <i class="fa-solid fa-caret-down"></i>' +
         '</button>' +
         '<div class="dropdown-content" id="dropdownMenu">' +
           '<a href="javascript:void(0)" onclick="goToCart()">My Cart</a>' +
-          '<a href="/payment">Pay Now</a>' +
+          '<a href="payment.html">Pay Now</a>' +
           '<a href="javascript:void(0)" onclick="logout()">Logout</a>' +
         '</div>' +
       '</li>';
-    updateBadge();
   }
 
-  /* Update footer when logged in */
+  /* ---- UPDATE FOOTER WHEN LOGGED IN ---- */
   if (loggedIn) {
     document.getElementById("footerLinks").innerHTML =
-      '<a href="/">Home</a>' +
-      '<a href="/about">About</a>' +
-      '<a href="/contact">Contact</a>' +
+      '<a href="index.html">Home</a>' +
+      '<a href="about.html">About</a>' +
+      '<a href="contact.html">Contact</a>' +
       '<a href="javascript:void(0)" onclick="goToCart()">Cart</a>' +
       '<a href="javascript:void(0)" onclick="logout()">Logout</a>';
   }
