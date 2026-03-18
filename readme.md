@@ -1,7 +1,7 @@
 # EARCO Headphones Website
 
 #### LIVE DEMO
-[View the EARCO Website](https://earco.vercel.app/)
+[View the EARCO Website](Working on deployment)
 
 > A clean, modern e-commerce style platform for discovering and exploring high-quality headphones.
 
@@ -10,7 +10,6 @@
 ## Description
 
 **EARCO** is an online website designed to showcase and sell premium headphones. The platform helps users explore different headphone products, learn about their features, and enjoy a smooth browsing experience before purchasing. Built with a focus on clean design and simplicity, EARCO delivers a user-friendly interface for audio enthusiasts who value both great sound and great design.
-
 
 
 ## Features
@@ -66,7 +65,7 @@ images:     Product and background images
 
 
 #### LIVE DEMO
-[View the EARCO Website](https://earco.vercel.app/)
+[View the EARCO Website](Still working on live)
 
 ## Notes
 

@@ -78,13 +78,34 @@
   </div>
 </section>
 
+
 <!-- PRODUCT FEATURES -->
 <section class="features">
   <h2>PRODUCT FEATURES</h2>
   <div class="video-box">
-    <div class="video-wrapper">
-      <video id="productVideo"><source src="HeadPhones.mp4" type="video/mp4"></video>
-      <div class="play-button" onclick="playVideo()">&#9654;</div>
+    <div class="video-wrapper" style="position:relative; display:inline-block;">
+      <video id="productVideo" style="width:100%; border-radius:12px;" preload="none" poster="images/slide1.jpg">
+        <source src="HeadPhones.mp4" type="video/mp4">
+      </video>
+      <div class="play-button" id="playBtn" onclick="toggleVideo()" style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 56px;
+        height: 56px;
+        background: rgba(255,255,255,0.85);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        cursor: pointer;
+        color: #2d5f7a;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        transition: opacity 0.3s;
+        user-select: none;
+      ">&#9654;</div>
     </div>
   </div>
   <div class="feature-grid">
@@ -129,11 +150,30 @@
     window.location.href = loggedIn ? "cart.html" : "login.html";
   }
 
-  /* ---- VIDEO ---- */
-  function playVideo() {
-    var v = document.getElementById("productVideo");
-    if (v) v.play();
+ /* ---- VIDEO ---- */
+function toggleVideo() {
+  var v = document.getElementById("productVideo");
+  var btn = document.getElementById("playBtn");
+  if (!v) return;
+  if (v.paused) {
+    v.play();
+    btn.style.opacity = "0";
+    btn.style.pointerEvents = "none";
+    v.onclick = function() { pauseVideo(); };
+  } else {
+    pauseVideo();
   }
+}
+
+function pauseVideo() {
+  var v = document.getElementById("productVideo");
+  var btn = document.getElementById("playBtn");
+  if (!v) return;
+  v.pause();
+  btn.style.opacity = "1";
+  btn.style.pointerEvents = "auto";
+  v.onclick = null;
+}
 
   /* ---- LOGOUT ---- */
   function logout() {

@@ -97,7 +97,7 @@
 <script>
   const username = localStorage.getItem("username");
 
-  /* Show username in header, hide Login/Signup */
+  /* Show username in header */
   if (username) {
     document.getElementById('accountBtn').innerHTML =
       `<i class="fa-solid fa-user"></i> ${username} <i class="fa-solid fa-caret-down"></i>`;
@@ -147,7 +147,7 @@
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
-          <img src="images/${item.name.toLowerCase().replace(/\s/g,'-')}.jpg"
+          <img src="${item.image || 'images/placeholder.jpg'}"
                alt="${item.name}"
                onerror="this.src='images/placeholder.jpg'">
           <div class="cart-item-info">
