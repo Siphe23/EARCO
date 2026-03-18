@@ -7,6 +7,34 @@
 <link rel="stylesheet" href="contact.css">
 <link rel="stylesheet" href="loader.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+  .btn { text-decoration: none; }
+  a.btn { text-decoration: none; }
+  .dropdown-content { display: none; position: absolute; background: #2d5f7a; min-width: 140px; border-radius: 6px; top: 42px; right: 0; overflow: hidden; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .dropdown-content.open { display: block; }
+  .dropdown-content a { display: block; padding: 10px 14px; color: white; text-decoration: none; font-size: 14px; transition: 0.2s; }
+  .dropdown-content a:hover { background: #07273c; }
+  .cart-link { position: relative; }
+  .cart-badge { position: absolute; top: -8px; right: -8px; background: #e74c3c; color: white; font-size: 10px; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+
+  /* CSS-only dropdown arrow — no font dependency */
+  .account-btn .caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #a8d4f0;
+    transition: transform 0.25s ease, border-top-color 0.25s ease;
+    flex-shrink: 0;
+    margin-left: 2px;
+  }
+  .account-btn:hover .caret { border-top-color: #ffffff; }
+  .account-btn.active .caret {
+    transform: rotate(180deg);
+    border-top-color: #ffffff;
+  }
+</style>
 </head>
 <body>
 
@@ -25,12 +53,15 @@
     <ul id="navMenu">
       <li><a href="index.html">HOME</a></li>
       <li><a href="about.html">ABOUT US</a></li>
-      <li class="cart-link"><a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a></li>
+      <li><a href="products.html">ALL PRODUCTS</a></li>
+       <li><a href="contact.html">Contact US</a></li>
       <li class="dropdown" id="accountDropdown">
-        <button class="account-btn" onclick="toggleDropdown(event)">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
+        <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
+          ACCOUNT <span class="caret"></span>
+        </button>
         <div class="dropdown-content" id="dropdownMenu">
           <a href="login.html">Login</a>
-          <a href="signup.html">Sign Up</a>
+          <a href="login.html">Sign Up</a>
         </div>
       </li>
     </ul>
@@ -41,44 +72,41 @@
 <section class="contact">
   <h1>CONTACT</h1>
 
-  <form action="https://formspree.io/f/mreyedzv" method="POST">
+  <form action="https://formspree.io/f/mreyedzv" method="POST" autocomplete="on">
     <input type="hidden" name="_subject" value="New EARCO Contact Message">
     <div class="row">
       <div class="input-group">
-        <label>First Name</label>
-        <input type="text" name="first_name" placeholder="Enter your first name" required>
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" autocomplete="given-name" required>
       </div>
       <div class="input-group">
-        <label>Last Name</label>
-        <input type="text" name="last_name" placeholder="Enter your last name" required>
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" placeholder="Enter your last name" autocomplete="family-name" required>
       </div>
     </div>
-    <label>Email</label>
-    <input type="email" name="email" placeholder="Enter your email" required>
-    <label>Subject</label>
-    <input type="text" name="subject" placeholder="Enter subject">
-    <label>Message</label>
-    <textarea name="message" rows="6" placeholder="Write your message here" required></textarea>
+    <label for="contact_email">Email</label>
+    <input type="email" id="contact_email" name="email" placeholder="Enter your email" autocomplete="email" required>
+    <label for="subject">Subject</label>
+    <input type="text" id="subject" name="subject" placeholder="Enter subject" autocomplete="off">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="5" placeholder="Write your message here" autocomplete="off" required></textarea>
     <button type="submit">Send Message</button>
   </form>
 
-  <!-- CONTACT INFO — details hidden until revealed -->
   <div class="contact-info">
     <h3>Get In Touch</h3>
     <p>Have questions about our products or need support? Fill in the form above or reach out directly.</p>
-
     <div class="reveal-row">
       <button class="reveal-btn" onclick="revealContact('phone', this)">
         <i class="fa-solid fa-phone"></i> Show Phone Number
       </button>
       <span class="contact-detail" id="phone" style="display:none"></span>
     </div>
-
     <div class="reveal-row">
-      <button class="reveal-btn" onclick="revealContact('email', this)">
+      <button class="reveal-btn" onclick="revealContact('emailDetail', this)">
         <i class="fa-solid fa-envelope"></i> Show Email Address
       </button>
-      <span class="contact-detail" id="email" style="display:none"></span>
+      <span class="contact-detail" id="emailDetail" style="display:none"></span>
     </div>
   </div>
 </section>
@@ -88,26 +116,89 @@
   <div id="footerLinks">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
-    <a href="login.html">Login</a>
+    <a href="products.html">Products</a>
+    <span id="footerAuth"></span>
   </div>
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
 
 <script src="loader.js"></script>
 <script>
-  /* Dropdown */
+  var loggedIn = localStorage.getItem("loggedIn") === "true";
+  var username = localStorage.getItem("username") || "ACCOUNT";
+
   function toggleDropdown(e) {
     e.stopPropagation();
-    document.getElementById('dropdownMenu').classList.toggle('open');
+    var menu = document.getElementById("dropdownMenu");
+    var btn  = document.getElementById("accountBtn");
+    if (menu) menu.classList.toggle("open");
+    if (btn)  btn.classList.toggle("active");
   }
-  document.addEventListener('click', function() {
-    document.getElementById('dropdownMenu').classList.remove('open');
+
+  document.addEventListener("click", function(e) {
+    var dropdown = document.getElementById("accountDropdown");
+    var menu = document.getElementById("dropdownMenu");
+    var btn  = document.getElementById("accountBtn");
+    if (menu && dropdown && !dropdown.contains(e.target)) {
+      menu.classList.remove("open");
+      if (btn) btn.classList.remove("active");
+    }
   });
 
-  /* Reveal contact details only on click — not visible to bots or scrapers */
+  function goToCart() {
+    window.location.href = loggedIn ? "cart.html" : "login.html";
+  }
+
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("username");
+    localStorage.removeItem("cart");
+    window.location.href = "index.html";
+  }
+
+  function updateBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    const badge = document.getElementById("cartBadge");
+    if (badge) {
+      badge.textContent = totalQty;
+      badge.style.display = totalQty > 0 ? "flex" : "none";
+    }
+  }
+
+  if (loggedIn) {
+    document.getElementById("navMenu").innerHTML =
+      '<li><a href="index.html">HOME</a></li>' +
+      '<li><a href="about.html">ABOUT US</a></li>' +
+      '<li><a href="products.html">ALL PRODUCTS</a></li>' +
+      '<li><a href="contact.html">CONTACT US</a></li>' +
+      '<li class="cart-link">' +
+        '<a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a>' +
+        '<span class="cart-badge" id="cartBadge" style="display:none"></span>' +
+      '</li>' +
+      '<li class="dropdown" id="accountDropdown">' +
+        '<button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">' +
+          '<i class="fa-solid fa-user"></i> ' + username + ' <span class="caret"></span>' +
+        '</button>' +
+        '<div class="dropdown-content" id="dropdownMenu">' +
+          '<a href="javascript:void(0)" onclick="goToCart()">My Cart</a>' +
+          '<a href="payment.html">Pay Now</a>' +
+          '<a href="javascript:void(0)" onclick="logout()">Logout</a>' +
+        '</div>' +
+      '</li>';
+    updateBadge();
+  }
+
+  const footerAuth = document.getElementById('footerAuth');
+  if (loggedIn) {
+    footerAuth.innerHTML = `<a href="javascript:void(0)" onclick="logout()">Logout</a>`;
+  } else {
+    footerAuth.innerHTML = `<a href="login.html">Login</a>`;
+  }
+
   const details = {
     phone: ['+27', '67', '670454'].join(' '),
-    email: ['nasiphisiphesihle', 'ndzumo', '@gmail.com'].join('')
+    emailDetail: ['nasiphisiphesihle', 'ndzumo', '@gmail.com'].join('')
   };
 
   function revealContact(type, btn) {
