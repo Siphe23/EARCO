@@ -11,6 +11,12 @@
 </head>
 <body>
 
+<script>
+  if(localStorage.getItem("loggedIn") !== "true"){
+    window.location.href = "/login";
+  }
+</script>
+
 <!-- LOADER -->
 <div id="loader">
   <div class="loader-dots"><span></span><span></span><span></span><span></span></div>
@@ -24,14 +30,15 @@
   </div>
   <nav>
     <ul id="navMenu">
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="about.html">ABOUT US</a></li>
-      <li class="cart-link"><a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a></li>
+      <li><a href="/">HOME</a></li>
+      <li><a href="/about">ABOUT US</a></li>
+      <li><a href="/products">ALL PRODUCTS</a></li>
+      <li class="cart-link"><a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
       <li class="dropdown">
-        <button class="account-btn">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
-        <div class="dropdown-content">
-          <a href="login.html">Login</a>
-          <a href="signup.html">Sign Up</a>
+        <button class="account-btn" id="accountBtn">ACCOUNT <i class="fa-solid fa-caret-down"></i></button>
+        <div class="dropdown-content" id="dropdownMenu">
+          <a href="/login">Login</a>
+          <a href="/login">Sign Up</a>
         </div>
       </li>
     </ul>
@@ -41,7 +48,6 @@
 <!-- PAYMENT SECTION -->
 <section class="payment-section">
 
-  <!-- COMING SOON BANNER -->
   <div class="coming-soon-banner">
     <i class="fa-solid fa-triangle-exclamation"></i>
     We're working on it — Payment coming soon!
@@ -49,23 +55,16 @@
 
   <div class="payment-wrapper">
 
-    <!-- LEFT: ORDER SUMMARY -->
+    <!-- LEFT: ORDER SUMMARY (loaded from cart) -->
     <div class="order-summary">
       <h2>Order Summary</h2>
-      <div class="summary-items">
-        <div class="summary-item">
-          <span>EARCO PulseX Headphones</span>
-          <span>R200.00</span>
-        </div>
-        <div class="summary-item">
-          <span>EARCO NeoBuds Earphones</span>
-          <span>R150.00</span>
-        </div>
+      <div class="summary-items" id="summaryItems">
+        <p style="color:#7aa8c0; font-size:13px;">Loading your cart...</p>
       </div>
       <div class="summary-divider"></div>
       <div class="summary-total">
         <span>Total</span>
-        <span>R350.00</span>
+        <span id="summaryTotal">R0.00</span>
       </div>
       <div class="secure-badge">
         <i class="fa-solid fa-lock"></i> Secure Checkout
@@ -76,7 +75,6 @@
     <div class="payment-form-box">
       <h2>Payment Details</h2>
 
-      <!-- PAYMENT METHOD TABS -->
       <div class="pay-methods">
         <button class="pay-method active"><i class="fa-solid fa-credit-card"></i> Card</button>
         <button class="pay-method"><i class="fa-brands fa-paypal"></i> PayPal</button>
@@ -87,7 +85,6 @@
         <label>Cardholder Name</label>
         <input type="text" placeholder="Name on card" disabled>
       </div>
-
       <div class="form-group">
         <label>Card Number</label>
         <div class="card-input-wrap">
@@ -95,7 +92,6 @@
           <i class="fa-brands fa-cc-visa card-icon"></i>
         </div>
       </div>
-
       <div class="form-row">
         <div class="form-group">
           <label>Expiry Date</label>
@@ -123,13 +119,64 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div id="footerLinks">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="login.html">Login</a>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/cart">Cart</a>
+    <a href="javascript:void(0)" onclick="logout()">Logout</a>
   </div>
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
 
 <script src="loader.js"></script>
+<script>
+  const username = localStorage.getItem("username");
+
+  /* Show username */
+  if (username) {
+    document.getElementById('accountBtn').innerHTML =
+      `<i class="fa-solid fa-user"></i> ${username} <i class="fa-solid fa-caret-down"></i>`;
+    document.getElementById('dropdownMenu').innerHTML =
+      `<a href="/cart">My Cart</a>
+       <a href="javascript:void(0)" onclick="logout()">Logout</a>`;
+  }
+
+  function logout() {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("username");
+    localStorage.removeItem("cart");
+    window.location.href = "/";
+  }
+
+  /* Load real cart into order summary */
+  function loadSummary() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const summaryItems = document.getElementById("summaryItems");
+    const summaryTotal = document.getElementById("summaryTotal");
+    let total = 0;
+
+    if (cart.length === 0) {
+      summaryItems.innerHTML = `<p style="color:#7aa8c0; font-size:13px;">Your cart is empty. <a href="/products" style="color:#4aa3df;">Shop now</a></p>`;
+      summaryTotal.textContent = "R0.00";
+      return;
+    }
+
+    summaryItems.innerHTML = "";
+    cart.forEach(item => {
+      if (!item.qty) item.qty = 1;
+      const itemTotal = parseFloat(item.price) * item.qty;
+      total += itemTotal;
+      const div = document.createElement("div");
+      div.className = "summary-item";
+      div.innerHTML = `
+        <span>${item.name}${item.qty > 1 ? ' x' + item.qty : ''}</span>
+        <span>R${itemTotal.toFixed(2)}</span>`;
+      summaryItems.appendChild(div);
+    });
+
+    summaryTotal.textContent = "R" + total.toFixed(2);
+  }
+
+  loadSummary();
+</script>
 </body>
 </html>

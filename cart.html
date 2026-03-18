@@ -12,7 +12,7 @@
 
 <script>
   if(localStorage.getItem("loggedIn") !== "true"){
-    window.location.href = "login.html";
+    window.location.href = "/login";
   }
 </script>
 
@@ -29,11 +29,11 @@
   </div>
   <nav>
     <ul id="navMenu">
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="about.html">ABOUT US</a></li>
-      <li><a href="products.html">ALL PRODUCTS</a></li>
+      <li><a href="/">HOME</a></li>
+      <li><a href="/about">ABOUT US</a></li>
+      <li><a href="/products">ALL PRODUCTS</a></li>
       <li class="cart-link">
-        <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+        <a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
         <span class="cart-badge" id="cartBadge" style="display:none"></span>
       </li>
       <li class="dropdown" id="accountDropdown">
@@ -41,8 +41,8 @@
           ACCOUNT <i class="fa-solid fa-caret-down"></i>
         </button>
         <div class="dropdown-content" id="dropdownMenu">
-          <a href="login.html">Login</a>
-          <a href="login.html">Sign Up</a>
+          <a href="/login">Login</a>
+          <a href="/login">Sign Up</a>
         </div>
       </li>
     </ul>
@@ -52,14 +52,13 @@
 <!-- CART PAGE -->
 <section class="cart-page">
   <div class="cart-box">
-
     <div class="cart-topbar">
       <h2><i class="fa-solid fa-cart-shopping"></i> CART <span id="itemCount">(0 items)</span></h2>
       <div style="display:flex; gap:10px; align-items:center;">
         <button class="clear-cart-btn" id="clearCartBtn" onclick="clearCart()" style="display:none">
           <i class="fa-solid fa-trash"></i> Clear Cart
         </button>
-        <a href="products.html" class="continue-btn"><i class="fa-solid fa-arrow-left"></i> Continue Shopping</a>
+        <a href="/products" class="continue-btn"><i class="fa-solid fa-arrow-left"></i> Continue Shopping</a>
       </div>
     </div>
 
@@ -68,7 +67,7 @@
     <div class="empty-cart" id="emptyCart">
       <i class="fa-solid fa-box-open"></i>
       <p>Your cart is empty.</p>
-      <a href="products.html" class="shop-now-btn">Start Shopping</a>
+      <a href="/products" class="shop-now-btn">Start Shopping</a>
     </div>
 
     <div class="cart-items" id="cartItems"></div>
@@ -80,21 +79,20 @@
         <span id="cartTotal" class="total-amount">R0.00</span>
       </div>
       <div class="cart-actions">
-        <a href="products.html" class="btn-secondary"><i class="fa-solid fa-arrow-left"></i> Continue Shopping</a>
+        <a href="/products" class="btn-secondary"><i class="fa-solid fa-arrow-left"></i> Continue Shopping</a>
         <button class="btn-checkout" id="checkoutBtn">Checkout <i class="fa-solid fa-arrow-right"></i></button>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div id="footerLinks">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="products.html">Products</a>
-    <a href="#" onclick="logout()">Logout</a>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/products">Products</a>
+    <a href="javascript:void(0)" onclick="logout()">Logout</a>
   </div>
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
@@ -106,15 +104,15 @@
 <script>
   const username = localStorage.getItem("username");
 
-  /* Show username in header */
   if (username) {
     document.getElementById('accountBtn').innerHTML =
       `<i class="fa-solid fa-user"></i> ${username} <i class="fa-solid fa-caret-down"></i>`;
     document.getElementById('dropdownMenu').innerHTML =
-      `<a href="#" onclick="logout()">Logout</a>`;
+      `<a href="/cart">My Cart</a>
+       <a href="/payment">Pay Now</a>
+       <a href="javascript:void(0)" onclick="logout()">Logout</a>`;
   }
 
-  /* Dropdown */
   function toggleDropdown(e) {
     e.stopPropagation();
     document.getElementById('dropdownMenu').classList.toggle('open');
@@ -123,15 +121,13 @@
     document.getElementById('dropdownMenu').classList.remove('open');
   });
 
-  /* Logout */
   function logout() {
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("username");
     localStorage.removeItem("cart");
-    window.location.href = "index.html";
+    window.location.href = "/";
   }
 
-  /* Toast */
   function showToast(message) {
     const toast = document.getElementById("toast");
     toast.textContent = message;
@@ -139,19 +135,13 @@
     setTimeout(() => toast.classList.remove("show"), 3000);
   }
 
-  /* Update cart badge */
   function updateBadge(cart) {
     const badge = document.getElementById("cartBadge");
     const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-    if (totalQty > 0) {
-      badge.textContent = totalQty;
-      badge.style.display = "flex";
-    } else {
-      badge.style.display = "none";
-    }
+    if (totalQty > 0) { badge.textContent = totalQty; badge.style.display = "flex"; }
+    else { badge.style.display = "none"; }
   }
 
-  /* Cart render */
   function renderCart() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const cartItemsDiv = document.getElementById("cartItems");
@@ -166,12 +156,7 @@
     let totalItems = 0;
 
     updateBadge(cart);
-
-    cart.forEach(item => {
-      if (!item.qty) item.qty = 1;
-      totalItems += item.qty;
-    });
-
+    cart.forEach(item => { if (!item.qty) item.qty = 1; totalItems += item.qty; });
     itemCount.textContent = `(${totalItems} item${totalItems !== 1 ? 's' : ''})`;
 
     if (cart.length === 0) {
@@ -189,9 +174,7 @@
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
-          <img src="${item.image}"
-               alt="${item.name}"
-               onerror="this.style.display='none'">
+          <img src="${item.image}" alt="${item.name}" onerror="this.style.display='none'">
           <div class="cart-item-info">
             <h3>${item.name}</h3>
             <p class="item-price">R${(parseFloat(item.price) * item.qty).toFixed(2)}</p>
@@ -203,16 +186,13 @@
           </div>
           <button class="remove-btn" onclick="removeItem(${index})">
             <i class="fa-solid fa-trash"></i>
-          </button>
-        `;
+          </button>`;
         cartItemsDiv.appendChild(div);
       });
-
       cartTotal.textContent = "R" + total.toFixed(2);
     }
   }
 
-  /* Change quantity */
   function changeQty(index, change) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     if (!cart[index].qty) cart[index].qty = 1;
@@ -228,7 +208,6 @@
     renderCart();
   }
 
-  /* Remove single item */
   function removeItem(index) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const name = cart[index].name;
@@ -238,7 +217,6 @@
     renderCart();
   }
 
-  /* Clear entire cart */
   function clearCart() {
     localStorage.removeItem("cart");
     showToast("Cart cleared! 🗑️");
@@ -246,7 +224,7 @@
   }
 
   document.getElementById("checkoutBtn").addEventListener("click", () => {
-    window.location.href = "payment.html";
+    window.location.href = "/payment";
   });
 
   renderCart();

@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="products.css">
 <link rel="stylesheet" href="loader.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+  .cart-link { position: relative; }
+  .cart-badge { position: absolute; top: -8px; right: -8px; background: #e74c3c; color: white; font-size: 10px; font-weight: bold; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+</style>
 </head>
 <body>
 
@@ -22,20 +26,21 @@
   </div>
   <nav>
     <ul id="navMenu">
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="about.html">ABOUT US</a></li>
+      <li><a href="/">HOME</a></li>
+      <li><a href="/about">ABOUT US</a></li>
       <li class="cart-link">
         <a href="javascript:void(0)" onclick="goToCart()">
           <i class="fa-solid fa-cart-shopping"></i>
         </a>
+        <span class="cart-badge" id="cartBadge" style="display:none"></span>
       </li>
       <li class="dropdown" id="accountDropdown">
         <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
           ACCOUNT <i class="fa-solid fa-caret-down"></i>
         </button>
         <div class="dropdown-content" id="dropdownMenu">
-          <a href="login.html">Login</a>
-          <a href="login.html">Sign Up</a>
+          <a href="/login">Login</a>
+          <a href="/login">Sign Up</a>
         </div>
       </li>
     </ul>
@@ -45,23 +50,18 @@
 <section class="products">
   <div class="product-grid">
     <div class="product"><img src="images/phone-5.jpg" alt="EARCO PulseX Headphones" loading="lazy"><h3>EARCO PulseX Headphones</h3><p>Powerful bass wireless headphones.</p><h4>R200</h4><button onclick="addToCart('EARCO PulseX Headphones',200,'images/phone-5.jpg')">Add To Cart</button></div>
-
     <div class="product"><img src="images/phine-7.jpg" alt="EARCO NeoBuds Earphones" loading="lazy"><h3>EARCO NeoBuds Earphones</h3><p>Lightweight earbuds with clear stereo sound.</p><h4>R150.00</h4><button onclick="addToCart('EARCO NeoBuds Earphones',150,'images/phine-7.jpg')">Add To Cart</button></div>
-
     <div class="product"><img src="images/phones4.jpg" alt="EARCO MiniBoom Speaker" loading="lazy"><h3>EARCO MiniBoom Speaker</h3><p>Portable bluetooth speaker with deep bass.</p><h4>R99.99</h4><button onclick="addToCart('EARCO MiniBoom Speaker',99.99,'images/phones4.jpg')">Add To Cart</button></div>
-
     <div class="product"><img src="images/phone3.jpg" alt="EARCO ComfortPads" loading="lazy"><h3>EARCO ComfortPads</h3><p>Soft replacement ear cushions for headphones.</p><h4>R250.00</h4><button onclick="addToCart('EARCO ComfortPads',250,'images/phone3.jpg')">Add To Cart</button></div>
-
     <div class="product"><img src="images/phone-1.jpg" alt="EARCO BassMax Headphones" loading="lazy"><h3>EARCO BassMax Headphones</h3><p>Studio level headphones for music lovers.</p><h4>R320.00</h4><button onclick="addToCart('EARCO BassMax Headphones',320,'images/phone-1.jpg')">Add To Cart</button></div>
-
     <div class="product"><img src="images/pone-2.jpg" alt="EARCO AirPods Pro" loading="lazy"><h3>EARCO AirPods Pro</h3><p>Compact wireless earbuds with noise isolation.</p><h4>R180.00</h4><button onclick="addToCart('EARCO AirPods Pro',180,'images/pone-2.jpg')">Add To Cart</button></div>
   </div>
 </section>
 
 <footer class="footer">
   <div id="footerLinks">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
     <a href="javascript:void(0)" onclick="goToCart()">Cart</a>
     <span id="footerAuth"></span>
   </div>
@@ -76,25 +76,38 @@
   const loggedIn = localStorage.getItem("loggedIn") === "true";
   const username = localStorage.getItem("username");
 
+  /* Cart badge */
+  function updateBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    const badge = document.getElementById("cartBadge");
+    if (badge) {
+      badge.textContent = totalQty;
+      badge.style.display = totalQty > 0 ? "flex" : "none";
+    }
+  }
+  updateBadge();
+
   /* Update header account button */
   if (loggedIn && username) {
     document.getElementById('accountBtn').innerHTML =
       `<i class="fa-solid fa-user"></i> ${username} <i class="fa-solid fa-caret-down"></i>`;
     document.getElementById('dropdownMenu').innerHTML =
-      `<a href="#" onclick="logout()">Logout</a>`;
+      `<a href="javascript:void(0)" onclick="goToCart()">My Cart</a>
+       <a href="/payment">Pay Now</a>
+       <a href="javascript:void(0)" onclick="logout()">Logout</a>`;
   }
 
   /* Update footer */
   const footerAuth = document.getElementById('footerAuth');
   if (loggedIn) {
-    footerAuth.innerHTML = `<a href="#" onclick="logout()">Logout</a>`;
+    footerAuth.innerHTML = `<a href="javascript:void(0)" onclick="logout()">Logout</a>`;
   } else {
-    footerAuth.innerHTML = `<a href="login.html">Login</a>`;
+    footerAuth.innerHTML = `<a href="/login">Login</a>`;
   }
 
-  /* Cart icon */
   function goToCart() {
-    window.location.href = loggedIn ? "cart.html" : "login.html";
+    window.location.href = loggedIn ? "/cart" : "/login";
   }
 
   /* Toast */
@@ -107,24 +120,20 @@
 
   /* Add to cart */
   function addToCart(name, price, image) {
-    if (!loggedIn) {
-      window.location.href = "login.html";
-      return;
-    }
+    if (!loggedIn) { window.location.href = "/login"; return; }
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart.push({ name, price, image });
     localStorage.setItem("cart", JSON.stringify(cart));
     showToast(name + " added to cart! 🛒");
+    updateBadge();
   }
 
-  /* Logout */
   function logout() {
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("username");
-    window.location.href = "index.html";
+    window.location.href = "/";
   }
 
-  /* Dropdown */
   function toggleDropdown(e) {
     e.stopPropagation();
     document.getElementById('dropdownMenu').classList.toggle('open');
