@@ -34,6 +34,7 @@
       <li><a href="products.html">ALL PRODUCTS</a></li>
       <li class="cart-link">
         <a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+        <span class="cart-badge" id="cartBadge" style="display:none"></span>
       </li>
       <li class="dropdown" id="accountDropdown">
         <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
@@ -54,7 +55,12 @@
 
     <div class="cart-topbar">
       <h2><i class="fa-solid fa-cart-shopping"></i> CART <span id="itemCount">(0 items)</span></h2>
-      <a href="products.html" class="continue-btn"><i class="fa-solid fa-arrow-left"></i> Continue Shopping</a>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="clear-cart-btn" id="clearCartBtn" onclick="clearCart()" style="display:none">
+          <i class="fa-solid fa-trash"></i> Clear Cart
+        </button>
+        <a href="products.html" class="continue-btn"><i class="fa-solid fa-arrow-left"></i> Continue Shopping</a>
+      </div>
     </div>
 
     <div class="cart-divider"></div>
@@ -93,6 +99,9 @@
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
 
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script src="loader.js"></script>
 <script>
   const username = localStorage.getItem("username");
@@ -118,7 +127,28 @@
   function logout() {
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("username");
+    localStorage.removeItem("cart");
     window.location.href = "index.html";
+  }
+
+  /* Toast */
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+  }
+
+  /* Update cart badge */
+  function updateBadge(cart) {
+    const badge = document.getElementById("cartBadge");
+    const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+    if (totalQty > 0) {
+      badge.textContent = totalQty;
+      badge.style.display = "flex";
+    } else {
+      badge.style.display = "none";
+    }
   }
 
   /* Cart render */
@@ -129,30 +159,47 @@
     const cartFooter = document.getElementById("cartFooter");
     const cartTotal = document.getElementById("cartTotal");
     const itemCount = document.getElementById("itemCount");
+    const clearBtn = document.getElementById("clearCartBtn");
 
     cartItemsDiv.innerHTML = "";
     let total = 0;
+    let totalItems = 0;
 
-    itemCount.textContent = `(${cart.length} item${cart.length !== 1 ? 's' : ''})`;
+    updateBadge(cart);
+
+    cart.forEach(item => {
+      if (!item.qty) item.qty = 1;
+      totalItems += item.qty;
+    });
+
+    itemCount.textContent = `(${totalItems} item${totalItems !== 1 ? 's' : ''})`;
 
     if (cart.length === 0) {
       emptyCart.style.display = "flex";
       cartFooter.style.display = "none";
+      clearBtn.style.display = "none";
     } else {
       emptyCart.style.display = "none";
       cartFooter.style.display = "block";
+      clearBtn.style.display = "inline-flex";
 
       cart.forEach((item, index) => {
-        total += parseFloat(item.price);
+        if (!item.qty) item.qty = 1;
+        total += parseFloat(item.price) * item.qty;
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
-          <img src="${item.image || 'images/placeholder.jpg'}"
+          <img src="${item.image}"
                alt="${item.name}"
-               onerror="this.src='images/placeholder.jpg'">
+               onerror="this.style.display='none'">
           <div class="cart-item-info">
             <h3>${item.name}</h3>
-            <p class="item-price">R${parseFloat(item.price).toFixed(2)}</p>
+            <p class="item-price">R${(parseFloat(item.price) * item.qty).toFixed(2)}</p>
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="changeQty(${index}, -1)">&#8722;</button>
+              <span class="qty-number">${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty(${index}, 1)">&#43;</button>
+            </div>
           </div>
           <button class="remove-btn" onclick="removeItem(${index})">
             <i class="fa-solid fa-trash"></i>
@@ -165,10 +212,36 @@
     }
   }
 
+  /* Change quantity */
+  function changeQty(index, change) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (!cart[index].qty) cart[index].qty = 1;
+    cart[index].qty += change;
+    if (cart[index].qty <= 0) {
+      const name = cart[index].name;
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      showToast(name + " removed from cart 🗑️");
+    } else {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+    renderCart();
+  }
+
+  /* Remove single item */
   function removeItem(index) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const name = cart[index].name;
     cart.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(cart));
+    showToast(name + " removed from cart 🗑️");
+    renderCart();
+  }
+
+  /* Clear entire cart */
+  function clearCart() {
+    localStorage.removeItem("cart");
+    showToast("Cart cleared! 🗑️");
     renderCart();
   }
 

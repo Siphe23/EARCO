@@ -46,15 +46,15 @@
   <div class="product-grid">
     <div class="product"><img src="images/phone-5.jpg" alt="EARCO PulseX Headphones" loading="lazy"><h3>EARCO PulseX Headphones</h3><p>Powerful bass wireless headphones.</p><h4>R200</h4><button onclick="addToCart('EARCO PulseX Headphones',200,'images/phone-5.jpg')">Add To Cart</button></div>
 
-<div class="product"><img src="images/phine-7.jpg" alt="EARCO NeoBuds Earphones" loading="lazy"><h3>EARCO NeoBuds Earphones</h3><p>Lightweight earbuds with clear stereo sound.</p><h4>R150.00</h4><button onclick="addToCart('EARCO NeoBuds Earphones',150,'images/phine-7.jpg')">Add To Cart</button></div>
+    <div class="product"><img src="images/phine-7.jpg" alt="EARCO NeoBuds Earphones" loading="lazy"><h3>EARCO NeoBuds Earphones</h3><p>Lightweight earbuds with clear stereo sound.</p><h4>R150.00</h4><button onclick="addToCart('EARCO NeoBuds Earphones',150,'images/phine-7.jpg')">Add To Cart</button></div>
 
-<div class="product"><img src="images/phones4.jpg" alt="EARCO MiniBoom Speaker" loading="lazy"><h3>EARCO MiniBoom Speaker</h3><p>Portable bluetooth speaker with deep bass.</p><h4>R99.99</h4><button onclick="addToCart('EARCO MiniBoom Speaker',99.99,'images/phones4.jpg')">Add To Cart</button></div>
+    <div class="product"><img src="images/phones4.jpg" alt="EARCO MiniBoom Speaker" loading="lazy"><h3>EARCO MiniBoom Speaker</h3><p>Portable bluetooth speaker with deep bass.</p><h4>R99.99</h4><button onclick="addToCart('EARCO MiniBoom Speaker',99.99,'images/phones4.jpg')">Add To Cart</button></div>
 
-<div class="product"><img src="images/phone3.jpg" alt="EARCO ComfortPads" loading="lazy"><h3>EARCO ComfortPads</h3><p>Soft replacement ear cushions for headphones.</p><h4>R250.00</h4><button onclick="addToCart('EARCO ComfortPads',250,'images/phone3.jpg')">Add To Cart</button></div>
+    <div class="product"><img src="images/phone3.jpg" alt="EARCO ComfortPads" loading="lazy"><h3>EARCO ComfortPads</h3><p>Soft replacement ear cushions for headphones.</p><h4>R250.00</h4><button onclick="addToCart('EARCO ComfortPads',250,'images/phone3.jpg')">Add To Cart</button></div>
 
-<div class="product"><img src="images/phone-1.jpg" alt="EARCO BassMax Headphones" loading="lazy"><h3>EARCO BassMax Headphones</h3><p>Studio level headphones for music lovers.</p><h4>R320.00</h4><button onclick="addToCart('EARCO BassMax Headphones',320,'images/phone-1.jpg')">Add To Cart</button></div>
+    <div class="product"><img src="images/phone-1.jpg" alt="EARCO BassMax Headphones" loading="lazy"><h3>EARCO BassMax Headphones</h3><p>Studio level headphones for music lovers.</p><h4>R320.00</h4><button onclick="addToCart('EARCO BassMax Headphones',320,'images/phone-1.jpg')">Add To Cart</button></div>
 
-<div class="product"><img src="images/pone-2.jpg" alt="EARCO AirPods Pro" loading="lazy"><h3>EARCO AirPods Pro</h3><p>Compact wireless earbuds with noise isolation.</p><h4>R180.00</h4><button onclick="addToCart('EARCO AirPods Pro',180,'images/pone-2.jpg')">Add To Cart</button></div>
+    <div class="product"><img src="images/pone-2.jpg" alt="EARCO AirPods Pro" loading="lazy"><h3>EARCO AirPods Pro</h3><p>Compact wireless earbuds with noise isolation.</p><h4>R180.00</h4><button onclick="addToCart('EARCO AirPods Pro',180,'images/pone-2.jpg')">Add To Cart</button></div>
   </div>
 </section>
 
@@ -67,6 +67,9 @@
   </div>
   <p>© 2026 EARCO. All Rights Reserved</p>
 </footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script src="loader.js"></script>
 <script>
@@ -89,22 +92,30 @@
     footerAuth.innerHTML = `<a href="login.html">Login</a>`;
   }
 
-  /* Cart icon — go to cart if logged in, else login */
+  /* Cart icon */
   function goToCart() {
     window.location.href = loggedIn ? "cart.html" : "login.html";
   }
 
-  /* Add to cart — redirect to login if not logged in */
-  function addToCart(name, price, image) {
-  if (!loggedIn) {
-    window.location.href = "login.html";
-    return;
+  /* Toast */
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
   }
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push({ name, price, image });
-  localStorage.setItem("cart", JSON.stringify(cart));
-  alert(name + " added to cart!");
-}
+
+  /* Add to cart */
+  function addToCart(name, price, image) {
+    if (!loggedIn) {
+      window.location.href = "login.html";
+      return;
+    }
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push({ name, price, image });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    showToast(name + " added to cart! 🛒");
+  }
 
   /* Logout */
   function logout() {
