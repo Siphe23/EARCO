@@ -7,15 +7,39 @@
 <title>EARCO</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="loader.css">
+
 <style>
   .btn { text-decoration: none; }
   a.btn { text-decoration: none; }
-  .dropdown-content { display: none; position: absolute; background: #2d5f7a; min-width: 140px; border-radius: 6px; top: 42px; right: 0; overflow: hidden; z-index: 999; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background: #2d5f7a;
+    min-width: 140px;
+    border-radius: 6px;
+    top: 42px;
+    right: 0;
+    overflow: hidden;
+    z-index: 999;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+
   .dropdown-content.open { display: block; }
-  .dropdown-content a { display: block; padding: 10px 14px; color: white; text-decoration: none; font-size: 14px; transition: 0.2s; }
+
+  .dropdown-content a {
+    display: block;
+    padding: 10px 14px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+  }
+
   .dropdown-content a:hover { background: #4aa3df; }
 </style>
 </head>
+
 <body>
 
 <!-- LOADER -->
@@ -29,16 +53,19 @@
     <h2>EARCO.</h2>
     <p>Better Sound Every Day</p>
   </div>
+
   <nav>
     <ul id="navMenu">
       <li><a href="index.html">HOME</a></li>
       <li><a href="about.html">ABOUT US</a></li>
       <li><a href="products.html">ALL PRODUCTS</a></li>
-       <li><a href="contact.html">Contact US</a></li>
+      <li><a href="contact.html">CONTACT US</a></li>
+
       <li class="dropdown" id="accountDropdown">
-        <button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">
+        <button class="account-btn" onclick="toggleDropdown(event)">
           ACCOUNT <i class="fa-solid fa-caret-down"></i>
         </button>
+
         <div class="dropdown-content" id="dropdownMenu">
           <a href="login.html">Login</a>
           <a href="login.html">Sign Up</a>
@@ -54,6 +81,7 @@
     <div class="herop-image">
       <img src="Earphonewoman.jpg" alt="Woman with Earphones">
     </div>
+
     <div class="herop-text">
       <h1 class="herop-title">EXPERIENCE <br> POWERFUL SOUND <br> WITH EARCO</h1>
       <a href="products.html" class="btn">BUY IT NOW</a>
@@ -61,14 +89,15 @@
   </div>
 </section>
 
-<!-- DISCOVER SECTION -->
+<!-- DISCOVER -->
 <section class="discover">
   <div class="discover-container">
     <div class="discover-text">
       <h3>Discover Better Sound</h3>
-      <p>Explore EARCO's premium range of high-quality audio accessories including headphones, earphones, ear pads and mini Bluetooth speakers. Designed for comfort, modern style and powerful sound performance.</p>
+      <p>Explore EARCO's premium range of high-quality audio accessories.</p>
       <a href="products.html" class="btn">SHOP NOW</a>
     </div>
+
     <div class="discover-slider">
       <div class="slides">
         <img src="images/slide1.jpg">
@@ -79,15 +108,16 @@
   </div>
 </section>
 
-
-<!-- PRODUCT FEATURES -->
+<!-- FEATURES -->
 <section class="features">
   <h2>PRODUCT FEATURES</h2>
+
   <div class="video-box">
     <div class="video-wrapper" style="position:relative; display:inline-block;">
       <video id="productVideo" style="width:100%; border-radius:12px;" preload="none" poster="images/slide1.jpg">
         <source src="HeadPhones.mp4" type="video/mp4">
       </video>
+
       <div class="play-button" id="playBtn" onclick="toggleVideo()" style="
         position: absolute;
         top: 50%;
@@ -103,16 +133,14 @@
         font-size: 22px;
         cursor: pointer;
         color: #2d5f7a;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-        transition: opacity 0.3s;
-        user-select: none;
       ">&#9654;</div>
     </div>
   </div>
+
   <div class="feature-grid">
-    <div class="feature"><h3>&#127911;</h3><h4>Premium Materials</h4><p>Crafted with high quality and durable materials.</p></div>
-    <div class="feature"><h3>&#9881;&#65039;</h3><h4>Advanced Technology</h4><p>Built with modern audio technology for clear powerful sound.</p></div>
-    <div class="feature"><h3>&#128161;</h3><h4>Comfortable Design</h4><p>Lightweight and soft ear cushions designed for long listening comfort.</p></div>
+    <div class="feature"><h3>🎧</h3><h4>Premium Materials</h4></div>
+    <div class="feature"><h3>⚙️</h3><h4>Advanced Technology</h4></div>
+    <div class="feature"><h3>💡</h3><h4>Comfortable Design</h4></div>
   </div>
 </section>
 
@@ -123,95 +151,115 @@
     <a href="about.html">About</a>
     <a href="login.html">Login</a>
   </div>
+
   <p>&copy; 2026 EARCO. All Rights Reserved</p>
 </footer>
 
 <script src="loader.js"></script>
+
 <script>
-  var loggedIn = localStorage.getItem("loggedIn") === "true";
-  var username = localStorage.getItem("username") || "ACCOUNT";
+const loggedIn = localStorage.getItem("loggedIn") === "true";
+const username = localStorage.getItem("username") || "ACCOUNT";
 
-  /* ---- DROPDOWN ---- */
-  function toggleDropdown(e) {
-    e.stopPropagation();
-    var menu = document.getElementById("dropdownMenu");
-    if (menu) menu.classList.toggle("open");
+/* DROPDOWN */
+function toggleDropdown(e) {
+  e.stopPropagation();
+  const menu = document.getElementById("dropdownMenu");
+  if (menu) menu.classList.toggle("open");
+}
+
+document.addEventListener("click", function(e) {
+  const dropdown = document.getElementById("accountDropdown");
+  const menu = document.getElementById("dropdownMenu");
+
+  if (menu && dropdown && !dropdown.contains(e.target)) {
+    menu.classList.remove("open");
   }
+});
 
-  document.addEventListener("click", function(e) {
-    var dropdown = document.getElementById("accountDropdown");
-    var menu = document.getElementById("dropdownMenu");
-    if (menu && dropdown && !dropdown.contains(e.target)) {
-      menu.classList.remove("open");
-    }
-  });
+/* CART */
+function goToCart() {
+  window.location.href = loggedIn ? "./cart.html" : "./login.html";
+}
 
-  /* ---- CART ---- */
-  function goToCart() {
-    window.location.href = loggedIn ? "cart.html" : "login.html";
-  }
-
- /* ---- VIDEO ---- */
+/* VIDEO */
 function toggleVideo() {
-  var v = document.getElementById("productVideo");
-  var btn = document.getElementById("playBtn");
-  if (!v) return;
+  const v = document.getElementById("productVideo");
+  const btn = document.getElementById("playBtn");
+
   if (v.paused) {
     v.play();
     btn.style.opacity = "0";
     btn.style.pointerEvents = "none";
-    v.onclick = function() { pauseVideo(); };
+    v.onclick = pauseVideo;
   } else {
     pauseVideo();
   }
 }
 
 function pauseVideo() {
-  var v = document.getElementById("productVideo");
-  var btn = document.getElementById("playBtn");
-  if (!v) return;
+  const v = document.getElementById("productVideo");
+  const btn = document.getElementById("playBtn");
+
   v.pause();
   btn.style.opacity = "1";
   btn.style.pointerEvents = "auto";
   v.onclick = null;
 }
 
-  /* ---- LOGOUT ---- */
-  function logout() {
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("username");
-    window.location.href = "index.html";
-  }
+/* LOGOUT */
+function logout() {
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("username");
+  window.location.href = "./index.html";
+}
 
-  /* ---- UPDATE HEADER WHEN LOGGED IN ---- */
-  if (loggedIn) {
-    document.getElementById("navMenu").innerHTML =
-      '<li><a href="index.html">HOME</a></li>' +
-      '<li><a href="about.html">ABOUT US</a></li>' +
-      '<li><a href="products.html">ALL PRODUCTS</a></li>' +
-      '<li><a href="contact.html">CONTACT</a></li>' +
-      '<li class="cart-link"><a href="javascript:void(0)" onclick="goToCart()"><i class="fa-solid fa-cart-shopping"></i></a></li>' +
-      '<li class="dropdown" id="accountDropdown">' +
-        '<button class="account-btn" id="accountBtn" onclick="toggleDropdown(event)">' +
-          '<i class="fa-solid fa-user"></i> ' + username + ' <i class="fa-solid fa-caret-down"></i>' +
-        '</button>' +
-        '<div class="dropdown-content" id="dropdownMenu">' +
-          '<a href="javascript:void(0)" onclick="goToCart()">My Cart</a>' +
-          '<a href="payment.html">Pay Now</a>' +
-          '<a href="javascript:void(0)" onclick="logout()">Logout</a>' +
-        '</div>' +
-      '</li>';
-  }
+/* UPDATE NAV */
+if (loggedIn) {
+  const nav = document.getElementById("navMenu");
 
-  /* ---- UPDATE FOOTER WHEN LOGGED IN ---- */
-  if (loggedIn) {
-    document.getElementById("footerLinks").innerHTML =
-      '<a href="index.html">Home</a>' +
-      '<a href="about.html">About</a>' +
-      '<a href="contact.html">Contact</a>' +
-      '<a href="javascript:void(0)" onclick="goToCart()">Cart</a>' +
-      '<a href="javascript:void(0)" onclick="logout()">Logout</a>';
+  if (nav) {
+    nav.innerHTML = `
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="about.html">ABOUT US</a></li>
+      <li><a href="products.html">ALL PRODUCTS</a></li>
+     
+
+      <li class="cart-link">
+        <a href="#" onclick="goToCart()">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+      </li>
+
+      <li class="dropdown" id="accountDropdown">
+        <button class="account-btn" onclick="toggleDropdown(event)">
+          <i class="fa-solid fa-user"></i> ${username}
+        </button>
+
+        <div class="dropdown-content" id="dropdownMenu">
+          <a href="#" onclick="goToCart()">My Cart</a>
+          <a href="payment.html">Pay Now</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </li>
+    `;
   }
+}
+
+/* UPDATE FOOTER */
+if (loggedIn) {
+  const footer = document.getElementById("footerLinks");
+
+  if (footer) {
+    footer.innerHTML = `
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="#" onclick="goToCart()">Cart</a>
+      <a href="#" onclick="logout()">Logout</a>
+    `;
+  }
+}
 </script>
+
 </body>
 </html>
